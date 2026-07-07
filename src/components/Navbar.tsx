@@ -11,7 +11,9 @@ const Navbar = () => {
   return (
     <nav className="fixed top-4 left-1/2 z-50 w-[calc(100%-1rem)] max-w-6xl -translate-x-1/2 rounded-3xl border border-[#232326] bg-[#111112]/80 px-4 py-3 backdrop-blur-md sm:w-[96%] sm:px-6">
       <div className="flex items-center justify-between gap-4">
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
 
         <ul className="hidden items-center gap-5 md:flex">
           {navigationManifest.map(({ id, label, path }) => (

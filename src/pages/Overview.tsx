@@ -1,13 +1,13 @@
-import Navbar from "../components/Navbar"
-
+import Hero from "../components/Hero";
+import Navbar from "../components/Navbar";
 
 const Overview = () => {
   return (
     <div className="h-screen bg-black">
-        <Navbar/>
-        
+      <Navbar />
+      <Hero />
     </div>
-  )
-}
+  );
+};
 
-export default Overview
+export default Overview;
