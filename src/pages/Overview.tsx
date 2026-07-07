@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 
 const Overview = () => {
   return (
-    <div className="h-screen bg-black">
+    <div className="bg-black">
       <Navbar />
       <Hero />
     </div>

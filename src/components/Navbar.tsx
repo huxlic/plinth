@@ -2,17 +2,32 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router";
 import { navigationManifest } from "../config/navigation";
 import Logo from "./ui/Logo";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
 
+  useGSAP(() => {
+
+    gsap.from("nav", {
+      yPercent: -100,
+      opacity: 0,
+      ease: "power3.out",
+      duration: 0.8,
+    })
+
+  }, [])
+
   return (
     <nav className="fixed top-4 left-1/2 z-50 w-[calc(100%-1rem)] max-w-6xl -translate-x-1/2 rounded-3xl border border-[#232326] bg-[#111112]/80 px-4 py-3 backdrop-blur-md sm:w-[96%] sm:px-6">
       <div className="flex items-center justify-between gap-4">
-        <Link to="/">
+        <Link to="/" className="flex items-center gap-2">
           <Logo />
+
+          <span className="text-[10px] text-tertiary font-jetbrains-mono">v1.0.0</span>
         </Link>
 
         <ul className="hidden items-center gap-5 md:flex">
