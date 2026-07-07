@@ -5,6 +5,7 @@ const Overview = () => {
   return (
     <div className="h-screen bg-black">
         <Navbar/>
+        
     </div>
   )
 }

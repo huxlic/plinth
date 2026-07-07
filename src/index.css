@@ -3,4 +3,17 @@
 
 @theme {
   --font-doto: "Doto", sans-serif;
+  --font-nunito: "Nunito", sans-serif;
+}
+
+@theme {
+  --color-nav-link: #8E8E93;
+  --color-nav-link-hover: #FCFCFC;
+}
+
+@theme {
+  --color-primary: #FCFCFC;
+  --color-secondary: #2997ff;
+  --color-secondary-hover: #007aff;
+  --color-tertiary: #8E8E93;
 }

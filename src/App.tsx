@@ -2,7 +2,7 @@ import Overview from "./pages/Overview"
 
 const App = () => {
   return (
-    <div>
+    <div className="font-nunito">
       <Overview/>
     </div>
   )
