@@ -1,7 +1,10 @@
+import Overview from "./pages/Overview"
 
 const App = () => {
   return (
-    <div>App</div>
+    <div>
+      <Overview/>
+    </div>
   )
 }
 
