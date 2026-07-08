@@ -33,7 +33,7 @@ const Showcase = () => {
         {features.map(({ rate, title }) => (
           <div
             key={title}
-            className="flex flex-col bg-black border border-[#232326] p-8 box-border"
+            className="flex flex-col gap-2 bg-black border border-[#232326] p-8 box-border"
           >
             <h3 className="text-4xl font-bold">{rate}</h3>
             <p className="text-tertiary font-jetbrains-mono text-[10px] uppercase ">

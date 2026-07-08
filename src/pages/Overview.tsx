@@ -1,7 +1,8 @@
 import Architecture from "../components/Architecture";
 import Hero from "../components/Hero";
-import Navbar from "../components/Navbar";
 import Showcase from "../components/Showcase";
+import Footer from "../components/ui/Footer";
+import Navbar from "../components/ui/Navbar";
 
 const Overview = () => {
   return (
@@ -9,7 +10,8 @@ const Overview = () => {
       <Navbar />
       <Hero />
       <Showcase />
-      <Architecture/>
+      <Architecture />
+      <Footer />
     </div>
   );
 };
