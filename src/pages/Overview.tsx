@@ -6,7 +6,7 @@ import Navbar from "../components/ui/Navbar";
 
 const Overview = () => {
   return (
-    <div className="">
+    <div className="relative min-h-screen">
       <Navbar />
       <Hero />
       <Showcase />
