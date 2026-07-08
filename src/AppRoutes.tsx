@@ -3,6 +3,8 @@ import { navigationManifest } from "./config/navigation";
 import LoginForm from "./auth/LoginForm";
 import SignUpForm from "./auth/SignUpForm";
 import { useAuth } from "./hooks/AuthContext";
+import Four0Four from "./pages/Four0Four";
+import Profile from "./pages/Profile";
 
 const AppRoutes = () => {
   const { user, loading } = useAuth();
@@ -30,6 +32,10 @@ const AppRoutes = () => {
       )}
 
       <Route
+        path="/profile"
+        element={user ? <Profile/> : <LoginForm />}
+      />
+      <Route
         path="/signin"
         element={user ? <Navigate to="/dashboard" replace /> : <LoginForm />}
       />
@@ -37,7 +43,7 @@ const AppRoutes = () => {
         path="/register"
         element={user ? <Navigate to="/dashboard" replace /> : <SignUpForm />}
       />
-      <Route path="*" element={<div>404 Not Found</div>} />
+      <Route path="*" element={<Four0Four/>} />
     </Routes>
   );
 };

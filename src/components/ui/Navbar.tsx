@@ -53,7 +53,11 @@ const Navbar = () => {
         </ul>
 
         <div className="hidden items-center gap-4 md:flex">
-          {loading && <span className="text-tertiary text-[10px] font-jetbrains-mono">Checking nodes...</span>}
+          {loading && (
+            <span className="text-tertiary text-[10px] font-jetbrains-mono">
+              Checking nodes...
+            </span>
+          )}
           {user ? (
             <Link
               to="/profile"
@@ -139,7 +143,13 @@ const Navbar = () => {
 
             <div className="mt-3 flex items-center gap-3 border-t border-white/10 pt-3">
               {user ? (
-                <Link to="/profile">Profile</Link>
+                <Link
+                  to="/profile"
+                  className="text-tertiary hover:text-primary text-[13px] transition-colors flex items-center gap-2"
+                >
+                  <CircleUserRound size={20}/>
+                  <p>Visit profile</p>
+                </Link>
               ) : (
                 <>
                   <Link
