@@ -1,23 +1,50 @@
 import { Link } from "react-router";
 import logo from "../assets/plinth.svg";
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { supabase } from "../lib/utils/supabaseClient";
 
 const LoginForm = () => {
+  const [credentials, setCredentials] = useState<{
+    email: string;
+    password: string;
+  }>({
+    email: "",
+    password: "",
+  });
 
-    const [credentials, setCredentials] = useState<{
-        username: string;
-        email: string;
-        password: string;
-      }>({
-        username: "",
-        email: "",
-        password: "",
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCredentials((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const loginMutation = useMutation({
+    mutationFn: async ({ email, password }: {email: string, password: string}) => {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
-    
-      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setCredentials((prev) => ({ ...prev, [name]: value }));
-      };
+
+      if (error) throw error;
+
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log("🔓 Node Accessed Successfully. Session established:", data);
+      // Optional: Add your routing redirect here, e.g., navigate("/dashboard")
+    },
+    onError: (error) => {
+      console.error("❌ Access Denied:", error.message);
+    },
+  });
+
+  const signInUser = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    loginMutation.mutate({ email, password });
+  };
 
   return (
     <section className="relative h-screen bg-grid-faded flex justify-center items-center px-4 overflow-hidden">
@@ -40,7 +67,10 @@ const LoginForm = () => {
 
         <form
           className="w-full flex flex-col gap-5 bg-[#111112]/90 backdrop-blur-md p-8 rounded-2xl border border-[#232326] mt-6 shadow-2xl"
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={(e) => {
+            e.preventDefault();
+            signInUser(e);
+          }}
         >
           <div className="flex flex-col gap-2">
             <label
@@ -82,9 +112,9 @@ const LoginForm = () => {
 
           <button
             type="submit"
-            className="text-[13px] mt-2 px-4 py-3 text-black font-bold bg-white hover:bg-gray-200 active:scale-[0.98] transition-all rounded-lg cursor-pointer text-center"
+            className={`text-[13px] mt-2 px-4 py-3 text-black font-bold ${loginMutation.isPending ? "cursor-not-allowed bg-gray-300" : "bg-white hover:bg-gray-200 cursor-pointer"} active:scale-[0.98] transition-all rounded-lg text-center`}
           >
-            Access Node
+            {loginMutation.isPending ? "CONNECTING_TO_NODE..." : "Access Node"}
           </button>
 
           <div className="mt-2 flex items-center justify-between border-t border-[#1c1c1e] pt-4">
