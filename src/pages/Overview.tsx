@@ -1,13 +1,15 @@
+import Architecture from "../components/Architecture";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
 import Showcase from "../components/Showcase";
 
 const Overview = () => {
   return (
-    <div className="bg-black">
+    <div className="">
       <Navbar />
       <Hero />
       <Showcase />
+      <Architecture/>
     </div>
   );
 };

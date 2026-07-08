@@ -19,6 +19,10 @@
   --color-tertiary: #8E8E93;
 }
 
+@theme {
+  --breakpoint-xs: 480px
+}
+
 @utility bg-grid-faded {
   background-size: 30px 30px;
   background-image:
