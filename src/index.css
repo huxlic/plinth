@@ -4,6 +4,7 @@
 @theme {
   --font-doto: "Doto", sans-serif;
   --font-nunito: "Nunito", sans-serif;
+  --font-inter: "Inter", sans-serif;
   --font-jetbrains-mono: "JetBrains Mono", sans-serif;
 }
 
@@ -28,8 +29,6 @@
   background-image:
     linear-gradient(to right, rgba(35, 35, 38, 0.5) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(35, 35, 38, 0.5) 1px, transparent 1px);
-  mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
-  -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
 }
 
 @utility bg-pixel-glow {
