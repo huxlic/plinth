@@ -50,10 +50,8 @@ const SignUpForm = () => {
 
     onSuccess: (data) => {
       console.log("🚀 Node Initialized Successfully:", data);
-      alert("Node created! Check your email or try logging in.");
     },
 
-    // 3. Fires automatically if Supabase rejects the password, email, or unique handle
     onError: (error) => {
       console.error("❌ Initialization Failed:", error.message);
     },

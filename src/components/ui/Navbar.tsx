@@ -4,11 +4,15 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Logo from "./Logo";
 import { navigationManifest } from "../../config/navigation";
+import { useAuth } from "../../hooks/AuthContext";
+import { CircleUserRound } from "lucide-react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  const { user, loading } = useAuth();
 
   useGSAP(() => {
     gsap.from("nav", {
@@ -49,18 +53,31 @@ const Navbar = () => {
         </ul>
 
         <div className="hidden items-center gap-4 md:flex">
-          <Link
-            to="/signin"
-            className="text-nav-link hover:text-nav-link-hover text-[13px] font-medium transition-colors"
-          >
-            Log In
-          </Link>
-          <Link
-            to="/register"
-            className="group relative isolate inline-flex h-9 items-center justify-center overflow-hidden rounded-full border border-white/20 bg-[linear-gradient(135deg,#5ab8ff_0%,#2997ff_42%,#006ee6_100%)] px-4 text-[12px] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.32),0_6px_16px_rgba(41,151,255,0.22)] transition-all duration-300 before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_30%_0%,rgba(255,255,255,0.38),transparent_34%)] after:absolute after:inset-y-0 after:-left-1/2 after:w-1/2 after:-skew-x-12 after:bg-white/20 after:opacity-0 after:transition-all after:duration-500 hover:-translate-y-0.5 hover:border-white/30 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.38),0_8px_20px_rgba(0,122,255,0.28)] hover:after:left-[125%] hover:after:opacity-100 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#111112]"
-          >
-            Get Started
-          </Link>
+          {loading && <span className="text-tertiary text-[10px] font-jetbrains-mono">Checking nodes...</span>}
+          {user ? (
+            <Link
+              to="/profile"
+              className="text-tertiary hover:text-primary"
+              title={user.email}
+            >
+              <CircleUserRound size={20} />
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="/signin"
+                className="text-nav-link hover:text-nav-link-hover text-[13px] font-medium transition-colors"
+              >
+                Log In
+              </Link>
+              <Link
+                to="/register"
+                className="group relative isolate inline-flex h-9 items-center justify-center overflow-hidden rounded-full border border-white/20 bg-[linear-gradient(135deg,#5ab8ff_0%,#2997ff_42%,#006ee6_100%)] px-4 text-[12px] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.32),0_6px_16px_rgba(41,151,255,0.22)] transition-all duration-300 before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_30%_0%,rgba(255,255,255,0.38),transparent_34%)] after:absolute after:inset-y-0 after:-left-1/2 after:w-1/2 after:-skew-x-12 after:bg-white/20 after:opacity-0 after:transition-all after:duration-500 hover:-translate-y-0.5 hover:border-white/30 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.38),0_8px_20px_rgba(0,122,255,0.28)] hover:after:left-[125%] hover:after:opacity-100 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#111112]"
+              >
+                Get Started
+              </Link>
+            </>
+          )}
         </div>
 
         <button
@@ -121,20 +138,26 @@ const Navbar = () => {
             </ul>
 
             <div className="mt-3 flex items-center gap-3 border-t border-white/10 pt-3">
-              <Link
-                to="/signin"
-                onClick={closeMenu}
-                className="flex h-10 flex-1 items-center justify-center rounded-full border border-white/10 text-[13px] font-medium text-nav-link transition-colors hover:bg-white/6 hover:text-nav-link-hover"
-              >
-                Log In
-              </Link>
-              <Link
-                to="/register"
-                onClick={closeMenu}
-                className="flex h-10 flex-1 items-center justify-center rounded-full border border-white/20  bg-[linear-gradient(135deg,#5ab8ff_0%,#2997ff_42%,#006ee6_100%)] text-[13px] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.3)] transition-transform active:scale-[0.98]"
-              >
-                Get Started
-              </Link>
+              {user ? (
+                <Link to="/profile">Profile</Link>
+              ) : (
+                <>
+                  <Link
+                    to="/signin"
+                    onClick={closeMenu}
+                    className="flex h-10 flex-1 items-center justify-center rounded-full border border-white/10 text-[13px] font-medium text-nav-link transition-colors hover:bg-white/6 hover:text-nav-link-hover"
+                  >
+                    Log In
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={closeMenu}
+                    className="flex h-10 flex-1 items-center justify-center rounded-full border border-white/20  bg-[linear-gradient(135deg,#5ab8ff_0%,#2997ff_42%,#006ee6_100%)] text-[13px] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.3)] transition-transform active:scale-[0.98]"
+                  >
+                    Get Started
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

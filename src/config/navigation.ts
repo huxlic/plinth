@@ -9,6 +9,7 @@ export const navigationManifest: NavItem[] = [
     id: "overview",
     label: "Overview",
     path: "/",
+    isTerminal: false,
     element: Overview,
   },
   {
@@ -22,12 +23,14 @@ export const navigationManifest: NavItem[] = [
     id: "canvas",
     label: "Canvas",
     path: "/canvas/main-grid-alpha",
+    isTerminal: true,
     element: Canvas,
   },
   {
     id: "metrics",
     label: "Metrics",
     path: "/canvas/metrics",
+    isTerminal: true,
     element: Metrics,
   },
 ];

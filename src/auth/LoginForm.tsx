@@ -31,7 +31,6 @@ const LoginForm = () => {
     },
     onSuccess: (data) => {
       console.log("🔓 Node Accessed Successfully. Session established:", data);
-      // Optional: Add your routing redirect here, e.g., navigate("/dashboard")
     },
     onError: (error) => {
       console.error("❌ Access Denied:", error.message);
