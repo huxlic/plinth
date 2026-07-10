@@ -18,12 +18,12 @@ const Showcase = () => {
             <div className="rounded-full h-2.5 w-2.5 bg-[#28C840]"></div>
           </div>
 
-          <div className="flex items-center gap-2 bg-black px-3 py-1 rounded-xl border border-[#1c1c1e] text-tertiary text-[10px] ">
+          <div className="flex flex-1 xs:flex-none items-center gap-2 bg-black px-3 py-1 rounded-xl border border-[#1c1c1e] text-tertiary text-[10px] ">
             <span className="text-secondary-hover">◉</span>
             <p>plinth.io/canvas/main-grid-alpha</p>
           </div>
 
-          <span className="text-tertiary text-[12px]">3 users</span>
+          <span className="text-tertiary text-[12px] hidden xs:block">3 users</span>
         </div>
 
         <AutoCanvasFeature />

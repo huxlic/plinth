@@ -25,11 +25,11 @@ const Architecture = () => {
 
       <h3 className="text-5xl font-semibold">Engineered from the packet up.</h3>
 
-      <div className="grid grid-cols-3 mt-6">
+      <div className="grid gap-1 sm:gap-0 sm:grid-cols-3 mt-6">
         {architecture.map(({ heading, title, desc }, index) => (
           <div
             key={heading}
-            className={`flex flex-col gap-4 ${index === 1 ? "border-x-[.1px] border-[#232326]" : ""} box-border p-8 hover:bg-[#111112] transition-colors duration-300`}
+            className={`flex flex-col gap-4 ${index === 1 ? "sm:border-x-[.1px] border-l-[.1px] border-[#232326]" : "border-l-[.1px] sm:border-none border-[#232326]"} box-border p-8 hover:bg-[#111112] transition-colors duration-300`}
           >
             <p className="uppercase text-tertiary text-[10px] font-jetbrains-mono">
               {heading}

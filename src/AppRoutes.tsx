@@ -11,7 +11,7 @@ const AppRoutes = () => {
 
   if (loading) {
     return (
-      <div className="h-screen bg-black flex justify-center items-center text-white font-mono text-xs">
+      <div className="h-screen bg-grid-faded bg-black flex justify-center items-center text-white font-mono font-bold animate-pulse text-xs sm:text-xl">
         SYNCHRONIZING_NODE...
       </div>
     );

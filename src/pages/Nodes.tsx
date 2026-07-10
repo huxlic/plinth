@@ -1,11 +1,8 @@
-import Navbar from "../components/ui/Navbar"
 
 
 const Nodes = () => {
   return (
-    <section className="relative min-h-screen bg-grid-faded ">
-      <Navbar/>
-    </section>
+    <div className="min-h-screen ">Nodes</div>
   )
 }
 

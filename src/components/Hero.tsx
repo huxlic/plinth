@@ -75,7 +75,7 @@ const Hero = () => {
       />
 
       <div className="w-full max-w-6xl flex flex-col gap-6 px-4 sm:w-[96%] sm:px-6">
-        <h1 className="hero-content text-white font-black font-doto text-5xl text-center md:text-start md:text-6xl lg:text-8xl uppercase tracking-tight">
+        <h1 className="hero-content text-white font-black font-doto text-4xl sm:text-5xl text-center md:text-start md:text-6xl lg:text-8xl uppercase tracking-tight">
           The World's Shared Live Canvas.
         </h1>
         <p className="hero-content text-tertiary text-[16px]  sm:text-xl text-center md:text-start">

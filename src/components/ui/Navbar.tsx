@@ -24,7 +24,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="fixed top-4 left-1/2 z-50 w-[calc(100%-1rem)] max-w-6xl -translate-x-1/2 rounded-3xl border border-[#232326] bg-[#111112]/80 px-4 py-3 backdrop-blur-md sm:w-[96%] sm:px-6">
+    <nav className="fixed top-4 left-1/2 right-1/2 z-50 w-[calc(100%-1rem)] max-w-6xl -translate-x-1/2 rounded-3xl border border-[#232326] bg-[#111112]/80 px-4 py-3 backdrop-blur-md sm:w-[96%] sm:px-6">
       <div className="flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-2">
           <Logo />
@@ -58,7 +58,7 @@ const Navbar = () => {
               Checking nodes...
             </span>
           )}
-          {user ? (
+          {!loading && user ? (
             <Link
               to="/profile"
               className="text-tertiary hover:text-primary"
@@ -142,12 +142,12 @@ const Navbar = () => {
             </ul>
 
             <div className="mt-3 flex items-center gap-3 border-t border-white/10 pt-3">
-              {user ? (
+              {!loading && user ? (
                 <Link
                   to="/profile"
                   className="text-tertiary hover:text-primary text-[13px] transition-colors flex items-center gap-2"
                 >
-                  <CircleUserRound size={20}/>
+                  <CircleUserRound size={20} />
                   <p>Visit profile</p>
                 </Link>
               ) : (
