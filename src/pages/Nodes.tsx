@@ -26,7 +26,7 @@ const Nodes = () => {
 
   const activities: { total: string | number; type: string }[] = [
     { total: others.length + 1, type: "users online" },
-    { total: others.length + 1, type: "Active nodes" },
+    { total: projects.length, type: "nodes" },
   ];
 
   return (
@@ -70,7 +70,7 @@ const Nodes = () => {
 
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-lg transition"
+                className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold px-4 py-2 rounded-2xl transition"
               >
                 + NEW_PROJECT
               </button>
@@ -90,7 +90,7 @@ const Nodes = () => {
               )}
 
               {!isLoading && projects.length === 0 && (
-                <div className="border border-dashed border-zinc-800 p-12 text-center rounded-2xl text-zinc-500">
+                <div className="border-2 border-border border-dotted p-12 text-center rounded-2xl text-tertiary text-[13px]">
                   No active project nodes found. Click "NEW_PROJECT" to
                   initialize a room.
                 </div>
