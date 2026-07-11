@@ -19,7 +19,13 @@ const LoginForm = () => {
   };
 
   const loginMutation = useMutation({
-    mutationFn: async ({ email, password }: {email: string, password: string}) => {
+    mutationFn: async ({
+      email,
+      password,
+    }: {
+      email: string;
+      password: string;
+    }) => {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -65,7 +71,7 @@ const LoginForm = () => {
         </p>
 
         <form
-          className="w-full flex flex-col gap-5 bg-[#111112]/90 backdrop-blur-md p-8 rounded-2xl border border-[#232326] mt-6 shadow-2xl"
+          className="w-full flex flex-col gap-5 bg-[#111112]/90 backdrop-blur-md p-8 rounded-2xl border border-border mt-6 shadow-2xl"
           onSubmit={(e) => {
             e.preventDefault();
             signInUser(e);
@@ -79,7 +85,7 @@ const LoginForm = () => {
               Email Address
             </label>
             <input
-              className="bg-black border border-[#232326] rounded-lg text-primary text-[13px] px-4 py-2.5 placeholder:text-[#474749] w-full outline-none focus:border-[#424246] transition-colors"
+              className="bg-black border border-border rounded-lg text-primary text-[13px] px-4 py-2.5 placeholder:text-[#474749] w-full outline-none focus:border-[#424246] transition-colors"
               type="email"
               name="email"
               id="email"
@@ -98,7 +104,7 @@ const LoginForm = () => {
               Password
             </label>
             <input
-              className="bg-black border border-[#232326] rounded-lg text-primary text-[13px] px-4 py-2.5 placeholder:text-[#474749] w-full outline-none focus:border-[#424246] transition-colors"
+              className="bg-black border border-border rounded-lg text-primary text-[13px] px-4 py-2.5 placeholder:text-[#474749] w-full outline-none focus:border-[#424246] transition-colors"
               type="password"
               name="password"
               id="password"

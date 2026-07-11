@@ -1,6 +1,6 @@
 import AutoCanvasFeature from "./features/AutoCanvasFeature";
 
-const features: {rate: string, title: string}[] = [
+const features: { rate: string; title: string }[] = [
   { rate: "0.42ms", title: "Median propagation" },
   { rate: "500×500", title: "Canvas resolution" },
   { rate: "1000+", title: "Active nodes" },
@@ -23,7 +23,9 @@ const Showcase = () => {
             <p>plinth.io/canvas/main-grid-alpha</p>
           </div>
 
-          <span className="text-tertiary text-[12px] hidden xs:block">3 users</span>
+          <span className="text-tertiary text-[12px] hidden xs:block">
+            3 users
+          </span>
         </div>
 
         <AutoCanvasFeature />
@@ -33,7 +35,7 @@ const Showcase = () => {
         {features.map(({ rate, title }) => (
           <div
             key={title}
-            className="flex flex-col gap-2 bg-black border border-[#232326] p-8 box-border"
+            className="flex flex-col gap-2 bg-black border border-border p-8 box-border"
           >
             <h3 className="text-4xl font-bold">{rate}</h3>
             <p className="text-tertiary font-jetbrains-mono text-[10px] uppercase ">

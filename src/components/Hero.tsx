@@ -92,7 +92,7 @@ const Hero = () => {
           </Link>
           <Link
             to="/canvas/main-grid-alpha"
-            className="hero-content flex items-center justify-center gap-2 text-primary text-[14px] px-4 py-2 font-semibold rounded-full bg-[#111112] border border-[#232326] "
+            className="hero-content flex items-center justify-center gap-2 text-primary text-[14px] px-4 py-2 font-semibold rounded-full bg-[#111112] border border-border "
           >
             <span>Enter Alpha</span>
             <ChevronRight size={15} className="text-tertiary" />

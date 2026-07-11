@@ -18,6 +18,7 @@
   --color-secondary: #2997ff;
   --color-secondary-hover: #007aff;
   --color-tertiary: #8E8E93;
+  --color-border: #232326
 }
 
 @theme {

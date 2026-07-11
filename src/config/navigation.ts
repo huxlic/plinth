@@ -22,14 +22,14 @@ export const navigationManifest: NavItem[] = [
   {
     id: "canvas",
     label: "Canvas",
-    path: "/canvas/main-grid-alpha",
+    path: "/canvas/:canvasId",
     isTerminal: true,
     element: Canvas,
   },
   {
     id: "metrics",
     label: "Metrics",
-    path: "/canvas/metrics",
+    path: "/metrics",
     isTerminal: true,
     element: Metrics,
   },
