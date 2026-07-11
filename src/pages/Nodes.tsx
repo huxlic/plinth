@@ -1,8 +1,10 @@
 import { useOthers } from "@liveblocks/react";
 import Navbar from "../components/ui/Navbar";
 import Telemetry from "../components/Telemetry";
+import { useState } from "react";
 
 const Nodes = () => {
+  const [activeGrids] = useState(0); // [activeGrids]
   const others = useOthers();
 
   const activities: { total: string | number; type: string }[] = [
@@ -15,7 +17,7 @@ const Nodes = () => {
       <Navbar />
 
       <section className="pt-24 flex flex-col gap-8">
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col md:flex-row justify-between md:items-center">
           <div className="flex flex-col gap-2">
             <h2 className="uppercase text-tertiary text-[10px] font-jetbrains-mono">
               Node Hub
@@ -41,11 +43,9 @@ const Nodes = () => {
             USERS_ONLINE={others.length + 1}
           />
 
-          <main className="bg-[#111112] box-border">
-            <div
-              className="text-tertiary text-[10px] font-jetbrains-mono uppercase"
-            >
-              <p className="">Active Grids · 5</p>
+          <main className="box-border">
+            <div className="text-tertiary text-[10px] font-jetbrains-mono uppercase flex items-center justify-between">
+              <p className="">Active Grids · {activeGrids}</p>
               <p className="">Sorted by load ↓</p>
             </div>
           </main>

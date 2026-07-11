@@ -1,3 +1,4 @@
+import type { LiveList, LiveMap, LiveObject } from "@liveblocks/client";
 
 export interface NavItem {
   id: string;
@@ -14,3 +15,27 @@ export interface AmbientDot {
   twinkleSpeed: number;
   phase: number;
 }
+
+export type CanvasNode = {
+  id: string;
+  type: "card" | "action";
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  label: string;
+  color: string;
+};
+
+export type CanvasActivity = {
+  id: string;
+  userId: string;
+  type: "system_init" | "node_created" | "node_moved";
+  message: string;
+  timestamp: number;
+};
+
+export type RoomStorage = {
+  nodes: LiveMap<string, LiveObject<CanvasNode>>;
+  activities: LiveList<LiveObject<CanvasActivity>>;
+};
