@@ -1,4 +1,9 @@
+import { useParams } from "react-router";
+
 const Canvas = () => {
+
+  const {id: roomId} = useParams()
+
   return (
     <div className="min-h-screen grid grid-cols-[300px_1fr] grid-rows-1 ">
       <aside className="bg-amber-50"></aside>

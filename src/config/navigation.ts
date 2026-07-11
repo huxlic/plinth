@@ -22,7 +22,7 @@ export const navigationManifest: NavItem[] = [
   {
     id: "canvas",
     label: "Canvas",
-    path: "/canvas/:canvasId",
+    path: "/canvas/:id",
     isTerminal: true,
     element: Canvas,
   },
