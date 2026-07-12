@@ -1,8 +1,6 @@
 import { create } from "zustand";
-import { supabase } from "../lib/utils/supabaseClient";
-import type { Project, ProjectState } from "../types";
-
-
+import { supabase } from "../utils/supabaseClient";
+import type { Project, ProjectState } from "../../types";
 
 export const useProjectStore = create<ProjectState>((set, get) => ({
   projects: [],

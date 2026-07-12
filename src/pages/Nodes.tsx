@@ -3,9 +3,10 @@ import Navbar from "../components/ui/Navbar";
 import Telemetry from "../components/Telemetry";
 import { useEffect, useState } from "react";
 import { CreateProjectModal } from "../components/ui/CreateProjectModal";
-import { useProjectStore } from "../store/useProjectStore";
+import { useProjectStore } from "../lib/store/useProjectStore";
 import { useAuth } from "../hooks/AuthContext";
 import NodeProjectCard from "../components/NodeProjectCard";
+import { Plus } from "lucide-react";
 
 const Nodes = () => {
   const { user } = useAuth();
@@ -36,18 +37,18 @@ const Nodes = () => {
       />
 
       <section className="pt-24 flex flex-col gap-8">
-        <div className="flex flex-col md:flex-row justify-between md:items-center">
-          <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-5 sm:gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="flex min-w-0 flex-col gap-2">
             <h2 className="uppercase text-tertiary text-[10px] font-jetbrains-mono">
               Node Hub
             </h2>
-            <p className="text-4xl font-bold">Select a canvas.</p>
+            <p className="text-3xl font-bold sm:text-4xl">Select a canvas.</p>
           </div>
 
-          <div className="font-jetbrains-mono flex gap-4">
+          <div className="font-jetbrains-mono flex flex-wrap gap-4 sm:gap-6 md:justify-end">
             {activities.map((activity, index) => (
-              <div key={index}>
-                <p className="text-[20px]">{activity.total}</p>
+              <div key={index} className="min-w-24">
+                <p className="text-lg sm:text-[20px]">{activity.total}</p>
                 <span className="uppercase text-tertiary text-[10px]">
                   {activity.type}
                 </span>
@@ -68,9 +69,9 @@ const Nodes = () => {
 
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold px-4 py-2 rounded-2xl transition"
+                className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold px-4 py-2 rounded-2xl transition flex items-center gap-1"
               >
-                + NEW_PROJECT
+              <Plus size={15}/> NEW_PROJECT
               </button>
             </div>
 

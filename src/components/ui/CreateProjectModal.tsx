@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../../hooks/AuthContext";
 import { useState } from "react";
 import { projectService } from "../../services/projectService";
-import { useProjectStore } from "../../store/useProjectStore";
+import { useProjectStore } from "../../lib/store/useProjectStore";
 import type { CreateProjectModalProps } from "../../types";
 
 export const CreateProjectModal = ({
@@ -39,7 +39,7 @@ export const CreateProjectModal = ({
       onClose();
 
       navigate(`/canvas/${newProject.id}`);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error(err);
 
@@ -51,7 +51,7 @@ export const CreateProjectModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-      <div className="w-full max-w-md border border-border bg-[#111112] p-6 rounded-2xl shadow-2xl text-xs">
+      <div className="w-full max-w-md border border-border bg-[#111112] p-8 rounded-2xl shadow-2xl text-xs">
         <h2 className="text-sm font-bold text-white mb-2 tracking-wide uppercase">
           Create New Project Workspace
         </h2>
@@ -75,14 +75,13 @@ export const CreateProjectModal = ({
             />
           </div>
 
-
           {errorMessage && (
             <div className="bg-red-950/40 border border-red-900/50 p-3 rounded-lg text-red-400">
               ⚠️ {errorMessage}
             </div>
           )}
 
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex justify-end gap-3 pt-2 font-jetbrains-mono">
             <button
               type="button"
               disabled={isSubmitting}
