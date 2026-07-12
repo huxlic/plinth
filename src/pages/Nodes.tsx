@@ -69,7 +69,7 @@ const Nodes = () => {
 
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold px-4 py-2 rounded-2xl transition flex items-center gap-1"
+                className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold px-4 py-2 rounded-full transition flex items-center gap-1"
               >
               <Plus size={15}/> NEW_PROJECT
               </button>

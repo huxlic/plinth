@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router";
+import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router";
 
 const NodeProjectCard = ({
   id,
@@ -9,27 +10,24 @@ const NodeProjectCard = ({
   name: string;
   created_at: string}) => {
 
-    const navigate = useNavigate()
-
   return (
-    <div
-      onClick={() => navigate(`/canvas/${id}`)}
-      className="group cursor-pointer border border-border bg-[#111112] p-5 rounded-xl hover:border-zinc-700 transition shadow-lg flex flex-col justify-between"
-    >
-      <div>
-        <div className="flex justify-between items-start mb-4">
-          <span className="text-zinc-600 font-mono text-[9px] uppercase tracking-wider">
-            {id.slice(0, 12)}...
-          </span>
-          <span className="w-2 h-2 rounded-full bg-zinc-800 group-hover:bg-emerald-500 transition" />
+    <div className="border border-border bg-[#111112] p-4 rounded-xl hover:bg-[#0A0A0B] transition flex justify-between items-center">
+      <div className="flex items-center gap-4">
+        <div className="h-16 w-16 bg-black rounded-md border border-border"></div>
+
+        <div className="flex flex-col gap-1">
+          <h3 className="font-bold text-zinc-200 group-hover:text-white truncate">
+            {name}
+          </h3>
+          <p className="text-[10px] text-tertiary">
+            Created: {new Date(created_at).toLocaleDateString()}
+          </p>
         </div>
-        <h3 className="text-sm font-bold text-zinc-200 group-hover:text-white mb-2 truncate">
-          {name}
-        </h3>
       </div>
-      <p className="text-[10px] text-zinc-500 mt-4">
-        Created: {new Date(created_at).toLocaleDateString()}
-      </p>
+
+      <div className="">
+        <Link to={`/canvas/${id}`} className="text-[12px] flex items-center gap-1 px-4 py-1.5 rounded-xl bg-black hover:bg-white text-white hover:text-black font-bold border border-border transition-colors duration-300" >Connect <ArrowUpRight size={13} /> </Link>
+      </div>
     </div>
   );
 };
