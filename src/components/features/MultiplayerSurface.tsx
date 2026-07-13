@@ -1,11 +1,36 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { ArtNode } from "../../types";
+import { useMutation, useStorage } from "@liveblocks/react";
+import { LiveObject } from "@liveblocks/client";
 
-const MultiplayerSurface = () => {
+const MultiplayerSurface = ({ projectId }: { projectId: string }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const [artNodes, setArtNodes] = useState<ArtNode[]>([]);
-  
+  const rawArtNodes = useStorage((root) => root.artNodes);
+  const artNodes = useMemo(() => {
+    return rawArtNodes || [];
+  }, [rawArtNodes]);
+
+  const addArtNode = useMutation(({ storage }, newBlock: ArtNode) => {
+    const artNodes = storage.get("artNodes");
+    if (artNodes) {
+      artNodes.push(new LiveObject(newBlock));
+    }
+  }, []);
+
+  const removeArtNode = useMutation(
+    ({ storage }, snappedX: number, snappedY: number) => {
+      const list = storage.get("artNodes");
+      const index = list.findIndex(
+        (node) => node.x === snappedX && node.y === snappedY,
+      );
+      if (index !== -1) {
+        list.delete(index);
+      }
+    },
+    [],
+  );
+
   const [camera, setCamera] = useState({ x: 0, y: 0, zoom: 1 });
   const [isPanning, setIsPanning] = useState(false);
 
@@ -84,9 +109,7 @@ const MultiplayerSurface = () => {
     );
 
     if (isOccupied) {
-      setArtNodes((prev) =>
-        prev.filter((node) => !(node.x === snappedX && node.y === snappedY)),
-      );
+      removeArtNode(snappedX, snappedY);
     } else {
       // Spawn a new block
       const newBlock: ArtNode = {
@@ -95,7 +118,7 @@ const MultiplayerSurface = () => {
         y: snappedY,
         color: "#2563eb",
       };
-      setArtNodes((prev) => [...prev, newBlock]);
+      addArtNode(newBlock);
     }
   };
 

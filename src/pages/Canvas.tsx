@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router";
 import { supabase } from "../lib/utils/supabaseClient";
 import type { ProjectDetails } from "../types";
 import MultiplayerSurface from "../components/features/MultiplayerSurface";
+import { RoomProvider } from "@liveblocks/react";
+import { LiveList } from "@liveblocks/client";
 
 const fetchProjectDetails = async (roomId: string) => {
   const { data, error } = await supabase
@@ -28,6 +30,13 @@ const Canvas = () => {
   });
 
   return (
+    <RoomProvider 
+      id={`project-room-${roomId}`} 
+      initialStorage={{
+        artNodes: new LiveList([]), 
+      }}
+    >
+
     <div className="min-h-screen grid grid-cols-[300px_1fr] grid-rows-1 ">
       <aside className="bg-black border border-border">
         <div className="font-jetbrains-mono p-2 border-b border-border flex justify-between items-center">
@@ -48,9 +57,10 @@ const Canvas = () => {
       </aside>
 
       <main className="">
-        <MultiplayerSurface/>
+        <MultiplayerSurface projectId={roomId!} />
       </main>
     </div>
+    </RoomProvider>
   );
 };
 
