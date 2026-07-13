@@ -14,8 +14,8 @@ const MultiplayerSurface = () => {
       const worldY = (e.clientY - prev.y) / prev.zoom;
 
       const nextZoom: number = Math.max(
-        0.5,
-        Math.min(4.0, e.deltaY < 0 ? prev.zoom * 1.05 : prev.zoom / 1.05),
+        0.2,
+        Math.min(4.0, e.deltaY < 0 ? prev.zoom * 1.02 : prev.zoom / 1.02),
       );
       const nextX = e.clientX - worldX * nextZoom,
         nextY = e.clientY - worldY * nextZoom;
@@ -51,17 +51,27 @@ const MultiplayerSurface = () => {
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerLeave={handlePointerUp}
-      className="w-full h-full relative overflow-hidden select-none"
+      className="w-full h-full relative overflow-hidden select-none "
     >
-      {/* INNER CANVAS SURFACE (THE WORLD ORIGIN) */}
+      {/* 1. INFINITE BLUEPRINT GRID LAYER (Pinned to window, drives pattern mathematically) */}
       <div
-        className={`absolute inset-0 origin-top-left pointer-events-auto ${isPanning ? "cursor-grabbing" : "cursor-default"}`}
+        className="absolute inset-0 bg-[radial-gradient(#27272a_1px,transparent_1px)] opacity-50 pointer-events-none"
+        style={{
+          backgroundPosition: `${panX}px ${panY}px`,
+          backgroundSize: `${24 * zoom}px ${24 * zoom}px`,
+        }}
+      />
+
+      {/* 2. INNER CANVAS SURFACE (Purely transforms interactive nodes and spatial elements) */}
+      <div
+        className={`absolute inset-0 origin-top-left pointer-events-auto ${
+          isPanning ? "cursor-grabbing" : "cursor-default"
+        }`}
         style={{
           transform: `translate(${panX}px, ${panY}px) scale(${zoom})`,
         }}
       >
-        {/* INFINITE BLUEPRINT GRID LAYER */}
-        <div className="absolute inset-0 bg-[radial-gradient(#27272a_1px,transparent_1px)] bg-size-[24px_24px] opacity-50 pointer-events-none" />
+        {/* Your interactive nodes, connections, and live peer cursors go right here! */}
       </div>
     </div>
   );
