@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 // Define Liveblocks types for your application
 // https://liveblocks.io/docs/api-reference/liveblocks-react#Typing-your-data
-import { LiveObject } from "@liveblocks/client";
+import { LiveList } from "@liveblocks/client";
+import {ArtNode} from "./src/types"
 declare global {
   interface Liveblocks {
     // Each user's Presence, for useMyPresence, useOthers, etc.
@@ -14,7 +15,8 @@ declare global {
     Storage: {
       // Example, a conflict-free list
       // animals: LiveList<string>;
-      input: LiveObject<{ text: string }>;
+      // input: LiveObject<{ text: string }>;
+      artNodes: LiveList<ArtNode>;
     };
 
     // Custom user info set when authenticating with a secret key

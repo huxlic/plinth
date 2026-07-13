@@ -71,7 +71,7 @@ export interface ProjectDetails {
   created_by: string;
 }
 
-export interface ArtNode {
+export type ArtNode = {
   id: string;
   x: number;
   y: number;

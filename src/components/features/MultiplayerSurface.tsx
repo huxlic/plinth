@@ -1,11 +1,19 @@
 import { useEffect, useRef, useState } from "react";
+import type { ArtNode } from "../../types";
 
 const MultiplayerSurface = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
+  const [artNodes, setArtNodes] = useState<ArtNode[]>([]);
+  
   const [camera, setCamera] = useState({ x: 0, y: 0, zoom: 1 });
-  const dragStart = useRef({ x: 0, y: 0 });
   const [isPanning, setIsPanning] = useState(false);
+
+  const dragStart = useRef({ x: 0, y: 0 });
+  const hasDragged = useRef(false);
+
+  const gridGap = 10;
+  const canvasSize = 1000;
 
   const panX = camera.x,
     panY = camera.y,
@@ -30,12 +38,14 @@ const MultiplayerSurface = () => {
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
     setIsPanning(true);
+    hasDragged.current = false;
     dragStart.current.x = e.clientX - camera.x;
     dragStart.current.y = e.clientY - camera.y;
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isPanning) return;
+    hasDragged.current = true;
     setCamera((prev) => ({
       ...prev,
       x: e.clientX - dragStart.current.x,
@@ -47,18 +57,63 @@ const MultiplayerSurface = () => {
     setIsPanning(false);
   };
 
+  const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (hasDragged.current) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const rect = canvas.getBoundingClientRect();
+
+    const localX = (e.clientX - rect.left) / zoom;
+    const localY = (e.clientY - rect.top) / zoom;
+
+    const snappedX = Math.floor(localX / gridGap) * gridGap;
+    const snappedY = Math.floor(localY / gridGap) * gridGap;
+
+    if (
+      snappedX < 0 ||
+      snappedX >= canvas.width ||
+      snappedY < 0 ||
+      snappedY >= canvas.height
+    )
+      return;
+
+    const isOccupied = artNodes.some(
+      (node) => node.x === snappedX && node.y === snappedY,
+    );
+
+    if (isOccupied) {
+      setArtNodes((prev) =>
+        prev.filter((node) => !(node.x === snappedX && node.y === snappedY)),
+      );
+    } else {
+      // Spawn a new block
+      const newBlock: ArtNode = {
+        id: crypto.randomUUID(),
+        x: snappedX,
+        y: snappedY,
+        color: "#2563eb",
+      };
+      setArtNodes((prev) => [...prev, newBlock]);
+    }
+  };
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = window.innerWidth / dpr;
-    canvas.height = window.innerHeight / dpr;
+    // const dpr = window.devicePixelRatio || 1;
+    canvas.width = 1000;
+    canvas.height = 1000;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const gridGap = 10;
 
+    // Clear the canvas so old drawings are erased before redrawing
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw the Grid Lines
     ctx.strokeStyle = "#161618";
     ctx.lineWidth = 1;
 
@@ -75,7 +130,18 @@ const MultiplayerSurface = () => {
       ctx.lineTo(canvas.width, y + 0.5);
       ctx.stroke();
     }
-  }, []);
+
+    // Draw All the Saved Art Blocks
+    artNodes.forEach((node) => {
+      ctx.fillStyle = node.color;
+
+      ctx.fillRect(node.x, node.y, gridGap, gridGap);
+
+      ctx.strokeStyle = "rgba(0, 0, 0, 0.4)";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(node.x, node.y, gridGap, gridGap);
+    });
+  }, [artNodes]);
 
   return (
     <div
@@ -84,7 +150,9 @@ const MultiplayerSurface = () => {
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerLeave={handlePointerUp}
-      className="w-full h-full relative overflow-hidden select-none "
+      className={`w-full h-full relative overflow-hidden select-none ${
+        isPanning ? "cursor-grabbing" : "cursor-default"
+      }`}
     >
       <div
         className="absolute inset-0 bg-[radial-gradient(#27272a_1px,transparent_1px)] opacity-50 pointer-events-none"
@@ -95,14 +163,18 @@ const MultiplayerSurface = () => {
       />
 
       <div
-        className={`absolute inset-0 origin-top-left pointer-events-auto flex justify-center items-center ${
-          isPanning ? "cursor-grabbing" : "cursor-default"
-        }`}
+        className="absolute inset-0 origin-top-left pointer-events-auto"
         style={{
           transform: `translate(${panX}px, ${panY}px) scale(${zoom})`,
         }}
       >
-        <canvas ref={canvasRef} className="bg-[#111112]" />
+        <canvas
+          onClick={handleCanvasClick}
+          ref={canvasRef}
+          width={canvasSize}
+          height={canvasSize}
+          className="bg-[#111112] cursor-crosshair"
+        />
       </div>
 
       <div className="p-4 bg-amber-700 absolute bottom-0 left-0 right-0"></div>
