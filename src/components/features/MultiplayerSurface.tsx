@@ -10,8 +10,8 @@ const MultiplayerSurface = () => {
 
   const handleWheel = (e: React.WheelEvent) => {
     setCamera((prev) => {
-      const worldX = (e.clientX - prev.x) / prev.zoom;
-      const worldY = (e.clientY - prev.y) / prev.zoom;
+      const worldX = (e.clientX - prev.x) / prev.zoom,
+        worldY = (e.clientY - prev.y) / prev.zoom;
 
       const nextZoom: number = Math.max(
         0.2,
@@ -53,7 +53,6 @@ const MultiplayerSurface = () => {
       onPointerLeave={handlePointerUp}
       className="w-full h-full relative overflow-hidden select-none "
     >
-      {/* 1. INFINITE BLUEPRINT GRID LAYER (Pinned to window, drives pattern mathematically) */}
       <div
         className="absolute inset-0 bg-[radial-gradient(#27272a_1px,transparent_1px)] opacity-50 pointer-events-none"
         style={{
@@ -62,7 +61,6 @@ const MultiplayerSurface = () => {
         }}
       />
 
-      {/* 2. INNER CANVAS SURFACE (Purely transforms interactive nodes and spatial elements) */}
       <div
         className={`absolute inset-0 origin-top-left pointer-events-auto ${
           isPanning ? "cursor-grabbing" : "cursor-default"
@@ -70,9 +68,7 @@ const MultiplayerSurface = () => {
         style={{
           transform: `translate(${panX}px, ${panY}px) scale(${zoom})`,
         }}
-      >
-        {/* Your interactive nodes, connections, and live peer cursors go right here! */}
-      </div>
+      ></div>
     </div>
   );
 };
