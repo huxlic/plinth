@@ -55,7 +55,7 @@ const MultiplayerSurface = () => {
     >
       {/* INNER CANVAS SURFACE (THE WORLD ORIGIN) */}
       <div
-        className="absolute inset-0 origin-top-left pointer-events-auto"
+        className={`absolute inset-0 origin-top-left pointer-events-auto ${isPanning ? "cursor-grabbing" : "cursor-default"}`}
         style={{
           transform: `translate(${panX}px, ${panY}px) scale(${zoom})`,
         }}
