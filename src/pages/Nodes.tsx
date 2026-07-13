@@ -59,8 +59,8 @@ const Nodes = () => {
 
         <div className="grid lg:grid-cols-[380px_1fr] gap-6">
           <Telemetry
-            GLOBAL_NODES={others.length + 1}
-            USERS_ONLINE={projects.length}
+            GLOBAL_NODES={projects.length}
+            USERS_ONLINE={others.length + 1}
           />
 
           <main className="box-border flex flex-col gap-6">
@@ -83,13 +83,13 @@ const Nodes = () => {
               )}
 
               {error && (
-                <div className="text-red-400 border border-red-900 bg-red-950/20 p-4 rounded-lg my-4">
+                <div className="text-[14px] border border-[#4a2900] bg-[#291900] p-4 rounded-xl my-4">
                   ⚠️ Network Failure: {error}
                 </div>
               )}
 
               {!isLoading && projects.length === 0 && (
-                <div className="border-2 border-border border-dotted p-12 text-center rounded-2xl text-tertiary text-[13px]">
+                <div className="border-2 border-border border-dashed p-12 text-center rounded-2xl text-tertiary text-[13px]">
                   No active project nodes found. Click "NEW_PROJECT" to
                   initialize a room.
                 </div>

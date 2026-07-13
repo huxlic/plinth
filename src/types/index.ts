@@ -70,3 +70,11 @@ export interface ProjectDetails {
   name: string;
   created_by: string;
 }
+
+export interface ArtNode {
+  id: string;
+  x: number;
+  y: number;
+  color: string;
+}
+
