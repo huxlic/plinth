@@ -64,3 +64,9 @@ export interface CreateProjectModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
+export interface ProjectDetails {
+  id: string;
+  name: string;
+  created_by: string;
+}

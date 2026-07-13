@@ -13,7 +13,7 @@ const NodeProjectCard = ({
   return (
     <div className="border border-border bg-[#111112] p-4 rounded-xl hover:bg-[#0A0A0B] transition flex justify-between items-center">
       <div className="flex items-center gap-4">
-        <div className="h-16 w-16 bg-black rounded-md border border-border"></div>
+        <div className="h-16 w-8 bg-black rounded-md border border-border"></div>
 
         <div className="flex flex-col gap-1">
           <h3 className="font-bold text-zinc-200 group-hover:text-white truncate">

@@ -29,7 +29,7 @@ const Nodes = () => {
   ];
 
   return (
-    <div className="relative min-h-screen px-8 bg-grid-faded">
+    <div className="relative min-h-screen px-4 md:px-8 bg-grid-faded">
       <Navbar />
       <CreateProjectModal
         isOpen={isModalOpen}
@@ -69,9 +69,9 @@ const Nodes = () => {
 
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold px-4 py-2 rounded-full transition flex items-center gap-1"
+                className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold px-4 py-2 rounded-full flex items-center gap-1 transition-colors"
               >
-              <Plus size={15}/> NEW_PROJECT
+                <Plus size={15} /> NEW_PROJECT
               </button>
             </div>
 
