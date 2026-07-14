@@ -23,7 +23,7 @@ export default function CanvasControls({
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-2 rounded-xl border border-border bg-[#111112]/95 p-2 shadow-2xl backdrop-blur sm:w-auto sm:max-w-2xl sm:flex-row sm:items-center sm:gap-3 sm:px-4 sm:py-2">
+    <div className="flex flex-col items-center gap-2 rounded-2xl border border-border bg-[#111112]/95 p-2 shadow-2xl backdrop-blur sm:w-auto sm:max-w-2xl sm:flex-row sm:items-center sm:gap-3 sm:px-4 sm:py-2">
       {/* Color strip: vertical scroll + bottom fade on mobile, horizontal on sm+ */}
       <div className="relative h-56 w-10 sm:h-auto sm:w-auto sm:min-w-0 sm:flex-1">
         <div className="flex h-full flex-col gap-1.5 overflow-y-auto p-1  pb-6 sm:h-auto sm:flex-row sm:overflow-x-auto sm:overflow-y-visible sm:p-1 sm:pr-6 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden">
