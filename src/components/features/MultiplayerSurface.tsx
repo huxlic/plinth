@@ -5,8 +5,9 @@ import CanvasControls from "./CanvasControls";
 
 const MultiplayerSurface = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const onControlRef = useRef(false)
 
-  const [currentColor, setCurrentColor] = useState("#EF4444")
+  const [currentColor, setCurrentColor] = useState("#EF4444");
 
   const rawArtNodes = useStorage((root) => root.artNodes);
   const artNodes = useMemo(() => {
@@ -15,7 +16,7 @@ const MultiplayerSurface = () => {
 
   const addArtNode = useMutation(({ storage }, newBlock: ArtNode) => {
     const artNodes = storage.get("artNodes");
-    artNodes.push(newBlock);  
+    artNodes.push(newBlock);
   }, []);
 
   const removeArtNode = useMutation(
@@ -45,6 +46,7 @@ const MultiplayerSurface = () => {
     zoom = camera.zoom;
 
   const handleWheel = (e: React.WheelEvent) => {
+     if (onControlRef.current) return;
     setCamera((prev) => {
       const worldX = (e.clientX - prev.x) / prev.zoom,
         worldY = (e.clientY - prev.y) / prev.zoom;
@@ -200,10 +202,12 @@ const MultiplayerSurface = () => {
         />
       </div>
 
-      <CanvasControls
-        currentColor={currentColor}
-        setCurrentColor={setCurrentColor}
-      />
+      <div onMouseOver={() => onControlRef.current = true} onMouseLeave={() => onControlRef.current = false} className="absolute inset-x-3 bottom-3 z-50 flex justify-start select-none sm:inset-x-6 sm:bottom-6 sm:justify-center cursor-default">
+        <CanvasControls
+          currentColor={currentColor}
+          setCurrentColor={setCurrentColor}
+        />
+      </div>
     </div>
   );
 };

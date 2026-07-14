@@ -1,5 +1,6 @@
 import { useHistory, useMutation } from "@liveblocks/react/suspense";
-import { LiveList } from "@liveblocks/client";import { Redo2, Trash2, Undo2 } from "lucide-react";
+import { LiveList } from "@liveblocks/client";
+import { Redo2, Trash2, Undo2 } from "lucide-react";
 import type { ArtNode } from "../../types";
 
 interface CanvasControlsProps {
@@ -9,7 +10,7 @@ interface CanvasControlsProps {
 
 const COLORS = [
   "#EF4444",
-   "#F97316",
+  "#F97316",
   "#3B82F6",
   "#06B6D4",
   "#10B981",
@@ -21,7 +22,7 @@ const COLORS = [
   "#A855F7",
   "#111827",
   "#6B7280",
- "#FFFFFF",
+  "#FFFFFF",
 ];
 
 export default function CanvasControls({
@@ -38,16 +39,17 @@ export default function CanvasControls({
   }, []);
 
   return (
-    <div className="absolute inset-x-3 bottom-3 z-50 flex justify-center select-none sm:inset-x-6 sm:bottom-6">
-      <div className="flex w-full max-w-2xl flex-wrap items-center justify-center gap-2 rounded-xl border border-border bg-[#111112]/95 px-3 py-2 shadow-2xl backdrop-blur sm:w-auto sm:flex-nowrap sm:justify-start sm:gap-3 sm:px-4">
-        <div className="grid grid-cols-6 gap-1.5 rounded-lg border border-zinc-800 p-1.5 sm:flex sm:border-0 sm:p-0 sm:pr-3">
+    <div className="flex flex-col items-center gap-2 rounded-xl border border-border bg-[#111112]/95 p-2 shadow-2xl backdrop-blur sm:w-auto sm:max-w-2xl sm:flex-row sm:items-center sm:gap-3 sm:px-4 sm:py-2">
+      {/* Color strip: vertical scroll + bottom fade on mobile, horizontal on sm+ */}
+      <div className="relative h-56 w-10 sm:h-auto sm:w-auto sm:min-w-0 sm:flex-1">
+        <div className="flex h-full flex-col gap-1.5 overflow-y-auto p-1  pb-6 sm:h-auto sm:flex-row sm:overflow-x-auto sm:overflow-y-visible sm:p-1 sm:pr-6 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden">
           {COLORS.map((color) => (
             <button
               key={color}
               title={color}
               aria-label={`Select ${color}`}
               onClick={() => setCurrentColor(color)}
-              className={`h-8 w-8 rounded-lg transition-all duration-150 sm:h-7 sm:w-7 ${
+              className={`h-8 w-8 shrink-0 rounded-lg transition-all duration-150 ${
                 currentColor === color
                   ? "scale-110 ring-1 ring-white shadow-lg"
                   : "opacity-70 hover:scale-110 hover:opacity-100"
@@ -56,11 +58,16 @@ export default function CanvasControls({
             />
           ))}
         </div>
+        {/* Fade: bottom edge on mobile, right edge on sm+ */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-linear-to-t from-[#111112] to-transparent sm:inset-x-auto sm:inset-y-0 sm:right-0 sm:h-auto sm:w-8 sm:bg-linear-to-l" />
+      </div>
 
-        <div className="flex items-center gap-1 rounded-lg border border-border p-1 sm:border-y-0 sm:border-l sm:border-r sm:px-3 sm:py-0">
+      {/* Undo/redo + Clear: column on mobile, row on sm+ */}
+      <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
+        <div className="flex shrink-0 flex-col items-center gap-1 rounded-lg border border-border p-1 sm:flex-row sm:px-2 sm:py-1">
           <button
             onClick={() => history.undo()}
-            className="grid h-9 w-9 place-items-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white sm:h-8 sm:w-8"
+            className="grid h-8 w-8 place-items-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white"
             title="Undo last change"
             aria-label="Undo last change"
           >
@@ -69,7 +76,7 @@ export default function CanvasControls({
 
           <button
             onClick={() => history.redo()}
-            className="grid h-9 w-9 place-items-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white sm:h-8 sm:w-8"
+            className="grid h-8 w-8 place-items-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white"
             title="Redo change"
             aria-label="Redo change"
           >
@@ -87,11 +94,12 @@ export default function CanvasControls({
               clearCanvas();
             }
           }}
-          className="inline-flex h-9 min-w-0 items-center justify-center gap-1.5 rounded-lg border border-red-900/50 bg-red-950/50 px-3 text-[11px] font-semibold text-red-200 transition-colors hover:bg-red-900 sm:h-8"
+          className="inline-flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-lg border border-red-900/50 bg-red-950/50 px-3 text-[11px] font-semibold text-red-200 transition-colors hover:bg-red-900"
         >
           <Trash2 size={14} />
-
-          <span className="whitespace-nowrap">Clear Stage</span>
+          <span className="hidden whitespace-nowrap sm:inline">
+            Clear Stage
+          </span>
         </button>
       </div>
     </div>

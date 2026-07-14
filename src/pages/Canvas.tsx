@@ -36,7 +36,7 @@ const Canvas = () => {
         artNodes: new LiveList([]),
       }}
     >
-      <div className="min-h-screen grid grid-cols-1 grid-rows-[auto_1fr] md:grid-cols-[300px_1fr] md:grid-rows-1">
+      <div className="min-h-screen grid grid-cols-1 grid-rows-[auto_1fr] ">
         
         {/* Aside: Top bar on mobile, left sidebar on desktop */}
         <aside className="bg-black border-b md:border-b-0 md:border-r border-border">
