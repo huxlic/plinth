@@ -27,7 +27,7 @@ const Telemetry = ({
       </div>
 
       <div className="px-4 font-jetbrains-mono">
-        <ul className="py-4 flex flex-col gap-2 border-b border-border">
+        <ul className="py-4 flex flex-col gap-2">
           {telemetry.map(({ title, rate }) => (
             <li key={title} className="flex justify-between items-center">
               <p className="uppercase text-tertiary text-[11px]">{title}</p>
@@ -35,11 +35,6 @@ const Telemetry = ({
             </li>
           ))}
         </ul>
-
-        <div className="py-4">
-          <p className="uppercase text-tertiary text-[10px]">Throughput · 60s</p>
-          <div className=""></div>
-        </div>
       </div>
     </aside>
   );

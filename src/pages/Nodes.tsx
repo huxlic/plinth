@@ -16,7 +16,7 @@ const Nodes = () => {
 
   const [onlineCount, setOnlineCount] = useState(1);
 
-  // 2. THE TRIGGER: Automatically fetch projects from Supabase the moment the page loads
+  // THE TRIGGER: Automatically fetch projects from Supabase the moment the page loads
   useEffect(() => {
     if (user?.id) {
       fetchProjects(user.id);
@@ -76,11 +76,11 @@ const Nodes = () => {
 
           <div className="font-jetbrains-mono flex flex-wrap gap-4 sm:gap-6 md:justify-end">
             {activities.map((activity, index) => (
-              <div key={index} className="min-w-24">
-                <p className="text-lg sm:text-[20px]">{activity.total}</p>
+              <div key={index} className="min-w-24 flex flex-col items-center">
                 <span className="uppercase text-tertiary text-[10px]">
                   {activity.type}
                 </span>
+                <p className="text-lg sm:text-[20px]">{activity.total}</p>
               </div>
             ))}
           </div>

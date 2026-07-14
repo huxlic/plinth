@@ -8,12 +8,12 @@ const NodeProjectCard = ({
 }: {
   id: string;
   name: string;
-  created_at: string}) => {
-
+  created_at: string;
+}) => {
   return (
     <div className="border border-border bg-[#111112] p-4 rounded-xl hover:bg-[#0A0A0B] transition flex justify-between items-center">
       <div className="flex items-center gap-4">
-        <div className="h-16 w-8 bg-black rounded-md border border-border"></div>
+        <div className="h-16 w-4 bg-black rounded-l-lg" />
 
         <div className="flex flex-col gap-1">
           <h3 className="font-bold text-zinc-200 group-hover:text-white truncate">
@@ -26,7 +26,12 @@ const NodeProjectCard = ({
       </div>
 
       <div className="">
-        <Link to={`/canvas/${id}`} className="text-[12px] flex items-center gap-1 px-4 py-1.5 rounded-xl bg-black hover:bg-white text-white hover:text-black font-bold border border-border transition-colors duration-300" >Connect <ArrowUpRight size={13} /> </Link>
+        <Link
+          to={`/canvas/${id}`}
+          className="text-[12px] flex items-center gap-1 px-4 py-1.5 rounded-xl bg-black hover:bg-white text-white hover:text-black font-bold transition-colors duration-300"
+        >
+          Connect <ArrowUpRight size={13} />{" "}
+        </Link>
       </div>
     </div>
   );
