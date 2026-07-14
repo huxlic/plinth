@@ -1,75 +1,121 @@
-# React + TypeScript + Vite
+# Collaborative Grid Canvas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A minimal, high-performance collaborative canvas for developers. Create, sketch, and brainstorm on an infinite grid in real-time with multiple users, optimized for both desktop and mobile.
 
-Currently, two official plugins are available:
+🔗 [Live Demo](https://plinth-beta.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ⚡ Features
 
-## React Compiler
+- **Real-Time Collaboration:** Shared canvas state is synced instantly across users with Liveblocks.
+- **Infinite Grid Canvas:** Place and remove blocks on a responsive grid with smooth pan and zoom controls.
+- **User Authentication:** Sign up and sign in via Supabase Auth.
+- **Project Rooms:** Create named canvas rooms and jump directly into collaborative sessions.
+- **Presence Tracking:** Online users are visible through Supabase realtime presence.
+- **Mobile-Friendly Interactions:** Touch and pointer controls work smoothly on small screens.
+- **Developer UI:** Clean dark aesthetic with JetBrains Mono typography and minimal chrome.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🧱 Tech Stack
 
-## Expanding the ESLint configuration
+- **Framework:** React 19 + Vite
+- **Styling:** Tailwind CSS
+- **Realtime Sync:** Liveblocks
+- **Auth & Database:** Supabase
+- **Animation:** GSAP
+- **State Management:** React Query + Zustand
+- **Fonts:** `@fontsource/jetbrains-mono`
+- **Deployment:** Vercel
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Node.js installed locally.
+- A Supabase project with Auth enabled.
+- A Supabase `projects` table with `id`, `name`, and `created_by` columns.
+- A Liveblocks public API key.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Local Setup
 
-```
+1. Clone the repository:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+   ```bash
+   git clone https://github.com/huxlic/plinth.git
+   cd plinth
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2. Install dependencies:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+   ```bash
+   npm install
+   ```
 
-```
+3. Create a local environment file:
+
+   ```bash
+   touch .env.local
+   ```
+
+4. Add the required variables to `.env.local`:
+
+   ```env
+   VITE_SUPABASE_URL=https://your-project-id.supabase.co
+   VITE_SUPABASE_PUBLISHABLE_KEY=your-actual-anon-key-here
+   VITE_LIVEBLOCKS_PUBLIC_KEY=pk_prod_your-liveblocks-key-here
+   ```
+
+5. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+6. Open the local URL shown by Vite in your browser.
+
+## 📦 Available Scripts
+
+- `npm run dev` — Start the dev server.
+- `npm run build` — Build the app for production.
+- `npm run preview` — Preview the production build locally.
+- `npm run lint` — Run ESLint.
+
+## 🗂️ Project Structure
+
+- `src/App.tsx` — Root providers for Liveblocks, Auth, and React Query.
+- `src/AppRoutes.tsx` — Client-side routing with protected routes.
+- `src/pages/Overview.tsx` — Marketing/landing page.
+- `src/pages/Nodes.tsx` — Dashboard for project rooms and online presence.
+- `src/pages/PlayGround.tsx` — Collaborative canvas room.
+- `src/auth/SignUpForm.tsx` — Supabase registration page.
+- `src/auth/LoginForm.tsx` — Supabase login page.
+- `src/components/features/MultiplayerSurface.tsx` — Canvas rendering, grid logic, and Liveblocks storage.
+- `src/lib/utils/supabaseClient.ts` — Supabase client setup.
+- `src/services/projectService.ts` — Project creation service.
+
+## 🔧 App Behavior
+
+- Users authenticate with Supabase email/password.
+- The dashboard at `/dashboard` lists user projects and online presence.
+- Creating a project opens a new room at `/canvas/:id`.
+- Rooms use Liveblocks `RoomProvider` and an `artNodes` LiveList for shared state.
+- Clicking an empty grid cell places a node; clicking an occupied cell removes it.
+- Camera pan and zoom are controlled via pointer and wheel events.
+- Online presence is tracked through a Supabase realtime channel.
+
+## ✅ Deployment
+
+The app is ready for Vercel deployment. Ensure the same environment variables are configured in the Vercel dashboard.
+
+## Notes
+
+- There is no `.env.example` file included by default.
+- The app depends on a Supabase table named `projects`.
+
+## Contributing
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Open a pull request with a clear description.
+
+---
+
+Built for polished developer collaboration on an infinite shared grid canvas.
