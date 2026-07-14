@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ClientSideSuspense, LiveblocksProvider, RoomProvider } from "@liveblocks/react/suspense";
 import { AuthProvider } from "./hooks/AuthContext";
 import AppRoutes from "./AppRoutes";
-// import { LiveObject } from "@liveblocks/client";
+import { LiveList } from "@liveblocks/client";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +18,9 @@ const App = () => {
             <RoomProvider
               id="canvas-1-v"
               initialPresence={{ cursor: null }}
+              initialStorage={{
+                artNodes: new LiveList([]),
+              }}
             >
               <ClientSideSuspense
                 fallback={

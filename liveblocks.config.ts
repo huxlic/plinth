@@ -2,7 +2,7 @@
 // Define Liveblocks types for your application
 // https://liveblocks.io/docs/api-reference/liveblocks-react#Typing-your-data
 import { LiveList } from "@liveblocks/client";
-import {ArtNode} from "./src/types"
+import type { ArtNode } from "./src/types";
 declare global {
   interface Liveblocks {
     // Each user's Presence, for useMyPresence, useOthers, etc.

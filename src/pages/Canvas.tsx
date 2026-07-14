@@ -56,18 +56,17 @@ const Canvas = () => {
             )}
           </div>
         </aside>
-
-        <ClientSideSuspense
-          fallback={
-            <div className="flex h-screen items-center justify-center text-white bg-black">
-              Loading canvas...
-            </div>
-          }
-        >
-          <main className="">
-            <MultiplayerSurface projectId={roomId!} />
-          </main>
-        </ClientSideSuspense>
+        <main className="">
+          <ClientSideSuspense
+            fallback={
+              <div className="flex h-screen items-center justify-center text-white bg-black">
+                Loading canvas...
+              </div>
+            }
+          >
+            <MultiplayerSurface />
+          </ClientSideSuspense>
+        </main>
       </div>
     </RoomProvider>
   );

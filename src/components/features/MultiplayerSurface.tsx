@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ArtNode } from "../../types";
 import { useMutation, useStorage } from "@liveblocks/react";
-import { LiveObject } from "@liveblocks/client";
+import CanvasControls from "./CanvasControls";
 
-const MultiplayerSurface = ({ projectId }: { projectId: string }) => {
+const MultiplayerSurface = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const [currentColor, setCurrentColor] = useState("#EF4444")
 
   const rawArtNodes = useStorage((root) => root.artNodes);
   const artNodes = useMemo(() => {
@@ -13,9 +15,7 @@ const MultiplayerSurface = ({ projectId }: { projectId: string }) => {
 
   const addArtNode = useMutation(({ storage }, newBlock: ArtNode) => {
     const artNodes = storage.get("artNodes");
-    if (artNodes) {
-      artNodes.push(new LiveObject(newBlock));
-    }
+    artNodes.push(newBlock);
   }, []);
 
   const removeArtNode = useMutation(
@@ -116,7 +116,7 @@ const MultiplayerSurface = ({ projectId }: { projectId: string }) => {
         id: crypto.randomUUID(),
         x: snappedX,
         y: snappedY,
-        color: "#2563eb",
+        color: currentColor,
       };
       addArtNode(newBlock);
     }
@@ -200,7 +200,10 @@ const MultiplayerSurface = ({ projectId }: { projectId: string }) => {
         />
       </div>
 
-      <div className="p-4 bg-amber-700 absolute bottom-0 left-0 right-0"></div>
+      <CanvasControls
+        currentColor={currentColor}
+        setCurrentColor={setCurrentColor}
+      />
     </div>
   );
 };
