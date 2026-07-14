@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { supabase } from "../lib/utils/supabaseClient";
 import type { ProjectDetails } from "../types";
 import MultiplayerSurface from "../components/features/MultiplayerSurface";
-import { RoomProvider } from "@liveblocks/react";
+import { ClientSideSuspense, RoomProvider } from "@liveblocks/react";
 import { LiveList } from "@liveblocks/client";
 
 const fetchProjectDetails = async (roomId: string) => {
@@ -16,7 +16,7 @@ const fetchProjectDetails = async (roomId: string) => {
 
   if (error) throw new Error(error.message);
   return data as ProjectDetails;
-}
+};
 
 const Canvas = () => {
   const navigate = useNavigate();
@@ -30,36 +30,45 @@ const Canvas = () => {
   });
 
   return (
-    <RoomProvider 
-      id={`project-room-${roomId}`} 
+    <RoomProvider
+      id={`project-room-${roomId}`}
       initialStorage={{
-        artNodes: new LiveList([]), 
+        artNodes: new LiveList([]),
       }}
     >
+      <div className="min-h-screen grid grid-cols-[300px_1fr] grid-rows-1 ">
+        <aside className="bg-black border border-border">
+          <div className="font-jetbrains-mono p-2 border-b border-border flex justify-between items-center">
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="text-[11px] flex items-center gap-1 hover:text-[#2997FF] transition-colors"
+            >
+              {" "}
+              <ArrowLeft size={13} /> Node Hub
+            </button>
 
-    <div className="min-h-screen grid grid-cols-[300px_1fr] grid-rows-1 ">
-      <aside className="bg-black border border-border">
-        <div className="font-jetbrains-mono p-2 border-b border-border flex justify-between items-center">
-          <button
-            onClick={() => navigate("/dashboard")}
-            className="text-[11px] flex items-center gap-1 hover:text-[#2997FF] transition-colors"
-          >
-            {" "}
-            <ArrowLeft size={13} /> Node Hub
-          </button>
+            {query.isLoading ? (
+              <div className="bg-[#111112] flex py-2 px-8 animate-pulse rounded-lg"></div>
+            ) : (
+              <p className="text-[11px] text-tertiary uppercase">
+                {query.data?.name}
+              </p>
+            )}
+          </div>
+        </aside>
 
-          {/* {query.isLoading && (<div className=""></div>)} */}
-
-          <p className="text-[11px] text-tertiary uppercase">
-            {query.data?.name}
-          </p>
-        </div>
-      </aside>
-
-      <main className="">
-        <MultiplayerSurface projectId={roomId!} />
-      </main>
-    </div>
+        <ClientSideSuspense
+          fallback={
+            <div className="flex h-screen items-center justify-center text-white bg-black">
+              Loading canvas...
+            </div>
+          }
+        >
+          <main className="">
+            <MultiplayerSurface projectId={roomId!} />
+          </main>
+        </ClientSideSuspense>
+      </div>
     </RoomProvider>
   );
 };
