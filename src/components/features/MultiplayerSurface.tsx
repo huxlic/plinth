@@ -177,12 +177,12 @@ const MultiplayerSurface = () => {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerUp}
-        className={`w-full h-full relative overflow-hidden select-none ${
+        className={`w-full h-full relative overflow-hidden select-none touch-none ${
           isPanning ? "cursor-grabbing" : "cursor-default"
         }`}
       >
         <div
-          className="absolute inset-0 bg-[radial-gradient(#27272a_1px,transparent_1px)] opacity-50 pointer-events-none"
+          className="absolute inset-0 bg-[radial-gradient(#27272a_1px,transparent_1px)] opacity-50 pointer-events-none transition-none"
           style={{
             backgroundPosition: `${panX}px ${panY}px`,
             backgroundSize: `${24 * zoom}px ${24 * zoom}px`,
