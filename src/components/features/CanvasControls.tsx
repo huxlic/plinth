@@ -43,7 +43,7 @@ export default function CanvasControls({
           ))}
         </div>
         {/* Fade: bottom edge on mobile, right edge on sm+ */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-linear-to-t from-[#111112] to-transparent sm:inset-x-auto sm:inset-y-0 sm:right-0 sm:h-auto sm:w-8 sm:bg-linear-to-l" />
+        <div className="pointer-events-none absolute inset-x-0 -bottom-1 h-8 bg-linear-to-t from-[#111112] to-transparent sm:inset-x-auto sm:inset-y-0 sm:right-0 sm:h-auto sm:w-8 sm:bg-linear-to-l" />
       </div>
 
       {/* Undo/redo + Clear: column on mobile, row on sm+ */}

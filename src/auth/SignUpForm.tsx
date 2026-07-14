@@ -48,8 +48,8 @@ const SignUpForm = () => {
       return data;
     },
 
-    onSuccess: (data) => {
-      console.log("🚀 Node Initialized Successfully:", data);
+    onSuccess: () => {
+      console.log("🚀 Node Initialized Successfully:");
     },
 
     onError: (error) => {

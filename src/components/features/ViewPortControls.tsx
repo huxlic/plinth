@@ -31,7 +31,7 @@ export const ViewportControls: React.FC<ViewportControlsProps> = ({
   const zoomPercentage = Math.round(camera.zoom * 100);;
 
   return (
-    <div className="absolute right-3 top-10 z-50 flex items-center gap-1.5 rounded-2xl border border-border bg-[#111112]/95 p-1 shadow-2xl backdrop-blur select-none sm:right-6">
+    <div className="absolute right-3 top-12 z-50 flex items-center gap-1.5 rounded-2xl border border-border bg-[#111112]/95 p-1 shadow-2xl backdrop-blur select-none sm:right-6">
       {/* 1. Re-center Button */}
       <button
         onClick={handleReCenter}
