@@ -29,16 +29,6 @@ const Canvas = () => {
     enabled: !!roomId, // Guard: Only run if roomId exists
   });
 
-  if (!roomId) {
-    return (
-      <div className="flex h-screen items-center justify-center text-white bg-black">
-        <div className="animate-pulse font-jetbrains-mono text-xs text-tertiary">
-          Initializing session...
-        </div>
-      </div>
-    );
-  }
-
   return (
     <RoomProvider
       id={`project-room-v1-${roomId}-test-1`}
@@ -46,14 +36,15 @@ const Canvas = () => {
         artNodes: new LiveList([]),
       }}
     >
-      <div className="min-h-screen grid grid-cols-[300px_1fr] grid-rows-1 ">
-        <aside className="bg-black border border-border">
+      <div className="min-h-screen grid grid-cols-1 grid-rows-[auto_1fr] md:grid-cols-[300px_1fr] md:grid-rows-1">
+        
+        {/* Aside: Top bar on mobile, left sidebar on desktop */}
+        <aside className="bg-black border-b md:border-b-0 md:border-r border-border">
           <div className="font-jetbrains-mono p-2 border-b border-border flex justify-between items-center">
             <button
               onClick={() => navigate("/dashboard")}
               className="text-[11px] flex items-center gap-1 hover:text-[#2997FF] transition-colors"
             >
-              {" "}
               <ArrowLeft size={13} /> Node Hub
             </button>
 
@@ -66,10 +57,12 @@ const Canvas = () => {
             )}
           </div>
         </aside>
-        <main className="">
+
+        {/* Main: Fills the remaining space perfectly */}
+        <main className="w-full h-full overflow-hidden">
           <ClientSideSuspense
             fallback={
-              <div className="flex h-screen items-center justify-center text-white bg-grid-faded">
+              <div className="flex h-screen items-center justify-center text- bg-[#111112] bg-grid-faded">
                 Loading canvas...
               </div>
             }

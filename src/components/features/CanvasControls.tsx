@@ -1,6 +1,5 @@
 import { useHistory, useMutation } from "@liveblocks/react/suspense";
-import { LiveList } from "@liveblocks/client";
-import { Redo2, Trash2, Undo2 } from "lucide-react";
+import { LiveList } from "@liveblocks/client";import { Redo2, Trash2, Undo2 } from "lucide-react";
 import type { ArtNode } from "../../types";
 
 interface CanvasControlsProps {
@@ -10,7 +9,7 @@ interface CanvasControlsProps {
 
 const COLORS = [
   "#EF4444",
-  "#F97316",
+   "#F97316",
   "#3B82F6",
   "#06B6D4",
   "#10B981",
@@ -22,7 +21,7 @@ const COLORS = [
   "#A855F7",
   "#111827",
   "#6B7280",
-  "#FFFFFF",
+ "#FFFFFF",
 ];
 
 export default function CanvasControls({
@@ -67,6 +66,7 @@ export default function CanvasControls({
           >
             <Undo2 size={17} />
           </button>
+
           <button
             onClick={() => history.redo()}
             className="grid h-9 w-9 place-items-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white sm:h-8 sm:w-8"
@@ -90,6 +90,7 @@ export default function CanvasControls({
           className="inline-flex h-9 min-w-0 items-center justify-center gap-1.5 rounded-lg border border-red-900/50 bg-red-950/50 px-3 text-[11px] font-semibold text-red-200 transition-colors hover:bg-red-900 sm:h-8"
         >
           <Trash2 size={14} />
+
           <span className="whitespace-nowrap">Clear Stage</span>
         </button>
       </div>
