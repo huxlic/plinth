@@ -22,7 +22,7 @@ const Four0Four = () => {
 
         <Link
           to="/"
-          className="mt-8 text-[13px] px-4 py-2 text-black font-bold bg-white hover:bg-gray-200 active:scale-[0.98] transition-all rounded-2xl cursor-pointer font-inter text-center shadow-lg"
+          className="mt-8 text-[13px] px-4 py-2 text-black font-bold bg-white hover:bg-gray-200 active:scale-[0.98] transition-all rounded-xl cursor-pointer font-inter text-center shadow-lg"
         >
           Return to Mesh
         </Link>

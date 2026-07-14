@@ -70,7 +70,7 @@ const PlayGround = () => {
       }}
     >
       <div className="min-h-screen grid grid-cols-1 grid-rows-[auto_1fr] ">
-        <section className="bg-[#111112] bg-grid-faded border-b border-border">
+        <section className="bg-[#0A0A0B] bg-grid-faded border-b border-border">
           <div className="font-jetbrains-mono p-2 border-b border-border flex justify-between items-center">
             <button
               onClick={() => navigate("/dashboard")}
@@ -95,7 +95,7 @@ const PlayGround = () => {
             <div className="flex items-center gap-2">
               <div className="h-1.5 w-1.5 rounded-full bg-[#30D158]"></div>
               <p className="text-[10px]">
-                {onlineCount} {onlineCount <= 1 ? "peer" : "peers"} online
+                {onlineCount} {onlineCount <= 1 ? "person" : "people"} online
               </p>
             </div>
           </div>
