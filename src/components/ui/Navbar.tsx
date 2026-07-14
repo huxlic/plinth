@@ -35,22 +35,24 @@ const Navbar = () => {
         </Link>
 
         <ul className="hidden items-center gap-5 md:flex">
-          {navigationManifest.map(({ id, label, path }) => (
-            path !== "/canvas/:id" &&
-            <li
-              key={id}
-              className="text-nav-link hover:text-nav-link-hover text-[13px] font-medium transition-colors"
-            >
-              <NavLink
-                to={path}
-                className={({ isActive }) =>
-                  isActive ? "text-nav-link-hover" : ""
-                }
-              >
-                {label}
-              </NavLink>
-            </li>
-          ))}
+          {navigationManifest.map(
+            ({ id, label, path }) =>
+              path !== "/canvas/:id" && (
+                <li
+                  key={id}
+                  className="text-nav-link hover:text-nav-link-hover text-[13px] font-medium transition-colors"
+                >
+                  <NavLink
+                    to={path}
+                    className={({ isActive }) =>
+                      isActive ? "text-nav-link-hover" : ""
+                    }
+                  >
+                    {label}
+                  </NavLink>
+                </li>
+              ),
+          )}
         </ul>
 
         <div className="hidden items-center gap-4 md:flex">
@@ -123,23 +125,41 @@ const Navbar = () => {
         <div className="overflow-hidden">
           <div className="mt-4 border-t border-white/10 pt-3">
             <ul className="flex flex-col gap-1">
-              {navigationManifest.map(({ id, label, path }) => (
-                <li key={id}>
-                  <NavLink
-                    to={path}
-                    onClick={closeMenu}
-                    className={({ isActive }) =>
-                      `block rounded-2xl px-3 py-2 text-[13px] font-medium transition-colors ${
-                        isActive
-                          ? "bg-white/8 text-nav-link-hover"
-                          : "text-nav-link hover:bg-white/5 hover:text-nav-link-hover"
-                      }`
-                    }
-                  >
-                    {label}
-                  </NavLink>
-                </li>
-              ))}
+              {navigationManifest.map(({ id, label, path }) =>
+                path === "/canvas/:id" ? (
+                  <li key={id}>
+                    <NavLink
+                      to="/canvas/main-grid-alpha"
+                      onClick={closeMenu}
+                      className={({ isActive }) =>
+                        `block rounded-2xl px-3 py-2 text-[13px] font-medium transition-colors ${
+                          isActive
+                            ? "bg-white/8 text-nav-link-hover"
+                            : "text-nav-link hover:bg-white/5 hover:text-nav-link-hover"
+                        }`
+                      }
+                    >
+                      {label}
+                    </NavLink>
+                  </li>
+                ) : (
+                  <li key={id}>
+                    <NavLink
+                      to={path}
+                      onClick={closeMenu}
+                      className={({ isActive }) =>
+                        `block rounded-2xl px-3 py-2 text-[13px] font-medium transition-colors ${
+                          isActive
+                            ? "bg-white/8 text-nav-link-hover"
+                            : "text-nav-link hover:bg-white/5 hover:text-nav-link-hover"
+                        }`
+                      }
+                    >
+                      {label}
+                    </NavLink>
+                  </li>
+                ),
+              )}
             </ul>
 
             <div className="mt-3 flex items-center gap-3 border-t border-white/10 pt-3">
