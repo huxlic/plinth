@@ -69,3 +69,7 @@
 .showcase-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #5ab8ff;
 }
+
+#liveblocks-badge {
+  display: none !important;
+}
