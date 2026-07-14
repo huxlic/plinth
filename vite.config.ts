@@ -6,6 +6,18 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   optimizeDeps: {
-    include: ['lucide-react'] 
-  }
-})
+    include: ["lucide-react"],
+  },
+  build: {
+    rolldownOptions: {
+      output: {
+        // This splits your node_modules into a separate "vendor" file
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            return "vendor";
+          }
+        },
+      },
+    },
+  },
+});
