@@ -71,7 +71,7 @@ const PlayGround = () => {
     >
       <div className="min-h-screen grid grid-cols-1 grid-rows-[auto_1fr] ">
         <section className="bg-[#0A0A0B] bg-grid-faded border-b border-border">
-          <div className="font-jetbrains-mono p-2 border-b border-border flex justify-between items-center">
+          <div className="font-jetbrains-mono py-2 px-3 border-b border-border flex justify-between items-center">
             <button
               onClick={() => navigate("/dashboard")}
               className="text-[11px] flex items-center gap-1 hover:text-[#2997FF] transition-colors"
@@ -105,7 +105,7 @@ const PlayGround = () => {
         <main className="w-full h-full overflow-hidden">
           <ClientSideSuspense
             fallback={
-              <div className="flex h-screen items-center justify-center text- bg-[#111112] bg-grid-faded">
+              <div className="flex h-screen items-center justify-center text- bg-[#111112] bg-grid-faded font-jetbrains-mono">
                 Loading canvas...
               </div>
             }
