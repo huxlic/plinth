@@ -70,3 +70,21 @@ export interface ProjectDetails {
   name: string;
   created_by: string;
 }
+
+export type ArtNode = {
+  id: string;
+  x: number;
+  y: number;
+  color: string;
+}
+
+export interface CameraState {
+  x: number;
+  y: number;
+  zoom: number;
+}
+
+export interface ViewportControlsProps {
+  camera: { x: number; y: number; zoom: number };
+  setCamera: React.Dispatch<React.SetStateAction<CameraState>>;
+}

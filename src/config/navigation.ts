@@ -1,5 +1,5 @@
 import type { NavItem } from "../types";
-import Canvas from "../pages/Canvas";
+import PlayGround from "../pages/PlayGround";
 import Metrics from "../pages/Metrics";
 import Nodes from "../pages/Nodes";
 import Overview from "../pages/Overview";
@@ -24,7 +24,7 @@ export const navigationManifest: NavItem[] = [
     label: "Canvas",
     path: "/canvas/:id",
     isTerminal: true,
-    element: Canvas,
+    element: PlayGround,
   },
   {
     id: "metrics",

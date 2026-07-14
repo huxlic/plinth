@@ -1,20 +1,4 @@
-const architecture: { heading: string; title: string; desc: string }[] = [
-  {
-    heading: "TRANSPORT",
-    title: "WebSocket Mesh",
-    desc: "Persistent duplex channels with binary framing. Each pixel mutation is a 12-byte payload.",
-  },
-  {
-    heading: "CONSISTENCY",
-    title: "CRDT State",
-    desc: "Conflict-free replicated grids. No merge conflicts, no lost writes, at any scale.",
-  },
-  {
-    heading: "RUNTIME",
-    title: "Edge Rendering",
-    desc: "GPU-accelerated canvas with dirty-rect batching. 240Hz on modern displays.",
-  },
-];
+import { architecture } from "../shared/constants";
 
 const Architecture = () => {
   return (
