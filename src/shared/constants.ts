@@ -65,6 +65,25 @@ export const COLORS = [
   "#FF99AA",
 ];
 
+export const features: { rate: string; title: string }[] = [
+  {
+    rate: "0.42ms",
+    title: "Local input response",
+  },
+  {
+    rate: "Infinite",
+    title: "Canvas viewport",
+  },
+  {
+    rate: "1,000+",
+    title: "Active edge nodes",
+  },
+  {
+    rate: "99.998%",
+    title: "Global uptime",
+  },
+];
+
 export const architecture: { heading: string; title: string; desc: string }[] =
   [
     {

@@ -1,11 +1,5 @@
+import { features } from "../shared/constants";
 import AutoCanvasFeature from "./features/AutoCanvasFeature";
-
-const features: { rate: string; title: string }[] = [
-  { rate: "0.42ms", title: "Median propagation" },
-  { rate: "500×500", title: "Canvas resolution" },
-  { rate: "1000+", title: "Active nodes" },
-  { rate: "99.998%", title: "Global uptime" },
-];
 
 const Showcase = () => {
   return (

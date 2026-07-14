@@ -68,6 +68,7 @@ const Hero = () => {
     <section
       ref={containerRef}
       className="py-20 pt-40 bg-grid-faded relative overflow-hidden flex justify-center items-center"
+      id="hero"
     >
       <div
         ref={glowRef}

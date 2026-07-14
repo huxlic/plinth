@@ -36,6 +36,7 @@ const Navbar = () => {
 
         <ul className="hidden items-center gap-5 md:flex">
           {navigationManifest.map(({ id, label, path }) => (
+            path !== "/canvas/:id" &&
             <li
               key={id}
               className="text-nav-link hover:text-nav-link-hover text-[13px] font-medium transition-colors"
