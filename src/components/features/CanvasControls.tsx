@@ -2,28 +2,12 @@ import { useHistory, useMutation } from "@liveblocks/react/suspense";
 import { LiveList } from "@liveblocks/client";
 import { Redo2, Trash2, Undo2 } from "lucide-react";
 import type { ArtNode } from "../../types";
+import { COLORS } from "../../shared/constants";
 
 interface CanvasControlsProps {
   currentColor: string;
   setCurrentColor: (color: string) => void;
 }
-
-const COLORS = [
-  "#EF4444",
-  "#F97316",
-  "#3B82F6",
-  "#06B6D4",
-  "#10B981",
-  "#84CC16",
-  "#F59E0B",
-  "#FACC15",
-  "#8B5CF6",
-  "#EC4899",
-  "#A855F7",
-  "#111827",
-  "#6B7280",
-  "#FFFFFF",
-];
 
 export default function CanvasControls({
   currentColor,
@@ -64,7 +48,7 @@ export default function CanvasControls({
 
       {/* Undo/redo + Clear: column on mobile, row on sm+ */}
       <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
-        <div className="flex shrink-0 flex-col items-center gap-1 rounded-lg border border-border p-1 sm:flex-row sm:px-2 sm:py-1">
+        <div className="flex shrink-0 flex-col items-center gap-1 rounded-xl border border-border p-1 sm:flex-row ">
           <button
             onClick={() => history.undo()}
             className="grid h-8 w-8 place-items-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white"

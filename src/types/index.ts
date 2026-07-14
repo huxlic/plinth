@@ -78,3 +78,13 @@ export type ArtNode = {
   color: string;
 }
 
+export interface CameraState {
+  x: number;
+  y: number;
+  zoom: number;
+}
+
+export interface ViewportControlsProps {
+  camera: { x: number; y: number; zoom: number };
+  setCamera: React.Dispatch<React.SetStateAction<CameraState>>;
+}

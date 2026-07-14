@@ -2,10 +2,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { ArtNode } from "../../types";
 import { useMutation, useStorage } from "@liveblocks/react/suspense";
 import CanvasControls from "./CanvasControls";
+import { ViewportControls } from "./ViewPortControls";
 
 const MultiplayerSurface = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const onControlRef = useRef(false)
+  const onControlRef = useRef(false);
 
   const [currentColor, setCurrentColor] = useState("#EF4444");
 
@@ -46,13 +47,13 @@ const MultiplayerSurface = () => {
     zoom = camera.zoom;
 
   const handleWheel = (e: React.WheelEvent) => {
-     if (onControlRef.current) return;
+    if (onControlRef.current) return;
     setCamera((prev) => {
       const worldX = (e.clientX - prev.x) / prev.zoom,
         worldY = (e.clientY - prev.y) / prev.zoom;
 
       const nextZoom: number = Math.max(
-        0.2,
+        0.1,
         Math.min(4.0, e.deltaY < 0 ? prev.zoom * 1.02 : prev.zoom / 1.02),
       );
       const nextX = e.clientX - worldX * nextZoom,
@@ -169,46 +170,54 @@ const MultiplayerSurface = () => {
   }, [artNodes]);
 
   return (
-    <div
-      onWheel={handleWheel}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerLeave={handlePointerUp}
-      className={`w-full h-full relative overflow-hidden select-none ${
-        isPanning ? "cursor-grabbing" : "cursor-default"
-      }`}
-    >
+    <>
       <div
-        className="absolute inset-0 bg-[radial-gradient(#27272a_1px,transparent_1px)] opacity-50 pointer-events-none"
-        style={{
-          backgroundPosition: `${panX}px ${panY}px`,
-          backgroundSize: `${24 * zoom}px ${24 * zoom}px`,
-        }}
-      />
-
-      <div
-        className="absolute inset-0 origin-top-left pointer-events-auto"
-        style={{
-          transform: `translate(${panX}px, ${panY}px) scale(${zoom})`,
-        }}
+        onWheel={handleWheel}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerUp}
+        className={`w-full h-full relative overflow-hidden select-none ${
+          isPanning ? "cursor-grabbing" : "cursor-default"
+        }`}
       >
-        <canvas
-          onClick={handleCanvasClick}
-          ref={canvasRef}
-          width={canvasSize}
-          height={canvasSize}
-          className="bg-[#111112] cursor-crosshair"
+        <div
+          className="absolute inset-0 bg-[radial-gradient(#27272a_1px,transparent_1px)] opacity-50 pointer-events-none"
+          style={{
+            backgroundPosition: `${panX}px ${panY}px`,
+            backgroundSize: `${24 * zoom}px ${24 * zoom}px`,
+          }}
         />
+
+        <div
+          className="absolute inset-0 origin-top-left pointer-events-auto"
+          style={{
+            transform: `translate(${panX}px, ${panY}px) scale(${zoom})`,
+          }}
+        >
+          <canvas
+            onClick={handleCanvasClick}
+            ref={canvasRef}
+            width={canvasSize}
+            height={canvasSize}
+            className="bg-[#111112] cursor-crosshair"
+          />
+        </div>
+
+        <div
+          onMouseOver={() => (onControlRef.current = true)}
+          onMouseLeave={() => (onControlRef.current = false)}
+          className="absolute inset-x-3 bottom-6 z-50 flex justify-start select-none w-max sm:w-auto sm:inset-x-6 sm:bottom-6 sm:justify-center cursor-default"
+        >
+          <CanvasControls
+            currentColor={currentColor}
+            setCurrentColor={setCurrentColor}
+          />
+        </div>
       </div>
 
-      <div onMouseOver={() => onControlRef.current = true} onMouseLeave={() => onControlRef.current = false} className="absolute inset-x-3 bottom-3 z-50 flex justify-start select-none sm:inset-x-6 sm:bottom-6 sm:justify-center cursor-default">
-        <CanvasControls
-          currentColor={currentColor}
-          setCurrentColor={setCurrentColor}
-        />
-      </div>
-    </div>
+      <ViewportControls camera={camera} setCamera={setCamera} />
+    </>
   );
 };
 
