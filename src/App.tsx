@@ -1,11 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ClientSideSuspense, LiveblocksProvider, RoomProvider } from "@liveblocks/react/suspense";
+import {
+  LiveblocksProvider,
+} from "@liveblocks/react/suspense";
 import { AuthProvider } from "./hooks/AuthContext";
 import AppRoutes from "./AppRoutes";
-import { LiveList } from "@liveblocks/client";
 
 const queryClient = new QueryClient();
-
 
 const App = () => {
   return (
@@ -15,23 +15,7 @@ const App = () => {
           publicApiKey={import.meta.env.VITE_LIVEBLOCKS_PUBLIC_KEY}
         >
           <div className="font-nunito selection:bg-secondary-hover bg-black text-primary">
-            <RoomProvider
-              id="canvas-1-v"
-              initialPresence={{ cursor: null }}
-              initialStorage={{
-                artNodes: new LiveList([]),
-              }}
-            >
-              <ClientSideSuspense
-                fallback={
-                  <div className="h-screen bg-grid-faded bg-black flex justify-center items-center text-white font-mono text-xs tracking-widest animate-pulse">
-                    ESTABLISHING_WEBSOCKET_MESH...
-                  </div>
-                }
-              >
-                <AppRoutes />
-              </ClientSideSuspense>
-            </RoomProvider>
+            <AppRoutes />
           </div>
         </LiveblocksProvider>
       </AuthProvider>

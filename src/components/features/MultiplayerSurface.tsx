@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ArtNode } from "../../types";
-import { useMutation, useStorage } from "@liveblocks/react";
+import { useMutation, useStorage } from "@liveblocks/react/suspense";
 import CanvasControls from "./CanvasControls";
 
 const MultiplayerSurface = () => {
@@ -15,7 +15,7 @@ const MultiplayerSurface = () => {
 
   const addArtNode = useMutation(({ storage }, newBlock: ArtNode) => {
     const artNodes = storage.get("artNodes");
-    artNodes.push(newBlock);
+    artNodes.push(newBlock);  
   }, []);
 
   const removeArtNode = useMutation(

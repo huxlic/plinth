@@ -1,4 +1,3 @@
-import { useOthers } from "@liveblocks/react";
 import Navbar from "../components/ui/Navbar";
 import Telemetry from "../components/Telemetry";
 import { useEffect, useState } from "react";
@@ -7,12 +6,15 @@ import { useProjectStore } from "../lib/store/useProjectStore";
 import { useAuth } from "../hooks/AuthContext";
 import NodeProjectCard from "../components/NodeProjectCard";
 import { Plus } from "lucide-react";
+import { supabase } from "../lib/utils/supabaseClient";
 
 const Nodes = () => {
   const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const fetchProjects = useProjectStore((state) => state.fetchProjects);
   const { projects, isLoading, error } = useProjectStore((state) => state);
+
+  const [onlineCount, setOnlineCount] = useState(1);
 
   // 2. THE TRIGGER: Automatically fetch projects from Supabase the moment the page loads
   useEffect(() => {
@@ -21,10 +23,37 @@ const Nodes = () => {
     }
   }, [user?.id, fetchProjects]);
 
-  const others = useOthers();
+  useEffect(() => {
+    if (!user?.id) return;
+
+    // Create a generic "lobby" presence channel
+    const channel = supabase.channel("online-users-lobby", {
+      config: {
+        presence: { key: user.id },
+      },
+    });
+
+    channel
+      .on("presence", { event: "sync" }, () => {
+        const presenceState = channel.presenceState();
+        // Count the unique active connections in the lobby
+        setOnlineCount(Object.keys(presenceState).length);
+      })
+      .subscribe(async (status) => {
+        if (status === "SUBSCRIBED") {
+          // Track that this current user is online
+          await channel.track({ online_at: new Date().toISOString() });
+        }
+      });
+
+    return () => {
+      // Clean up the websocket channel when the dashboard unmounts
+      supabase.removeChannel(channel);
+    };
+  }, [user?.id]);
 
   const activities: { total: string | number; type: string }[] = [
-    { total: others.length + 1, type: "users online" },
+    { total: onlineCount, type: "users online" },
     { total: projects.length, type: "nodes" },
   ];
 
@@ -60,7 +89,7 @@ const Nodes = () => {
         <div className="grid lg:grid-cols-[380px_1fr] gap-6">
           <Telemetry
             GLOBAL_NODES={projects.length}
-            USERS_ONLINE={others.length + 1}
+            USERS_ONLINE={onlineCount}
           />
 
           <main className="box-border flex flex-col gap-6">

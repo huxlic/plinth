@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { supabase } from "../lib/utils/supabaseClient";
 import type { ProjectDetails } from "../types";
 import MultiplayerSurface from "../components/features/MultiplayerSurface";
-import { ClientSideSuspense, RoomProvider } from "@liveblocks/react";
+import { ClientSideSuspense, RoomProvider } from "@liveblocks/react/suspense";
 import { LiveList } from "@liveblocks/client";
 
 const fetchProjectDetails = async (roomId: string) => {
@@ -29,9 +29,19 @@ const Canvas = () => {
     enabled: !!roomId, // Guard: Only run if roomId exists
   });
 
+  if (!roomId) {
+    return (
+      <div className="flex h-screen items-center justify-center text-white bg-black">
+        <div className="animate-pulse font-jetbrains-mono text-xs text-tertiary">
+          Initializing session...
+        </div>
+      </div>
+    );
+  }
+
   return (
     <RoomProvider
-      id={`project-room-${roomId}`}
+      id={`project-room-v1-${roomId}-test-1`}
       initialStorage={{
         artNodes: new LiveList([]),
       }}
@@ -59,7 +69,7 @@ const Canvas = () => {
         <main className="">
           <ClientSideSuspense
             fallback={
-              <div className="flex h-screen items-center justify-center text-white bg-black">
+              <div className="flex h-screen items-center justify-center text-white bg-grid-faded">
                 Loading canvas...
               </div>
             }

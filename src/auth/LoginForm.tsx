@@ -35,12 +35,6 @@ const LoginForm = () => {
 
       return data;
     },
-    onSuccess: (data) => {
-      console.log("🔓 Node Accessed Successfully. Session established:", data);
-    },
-    onError: (error) => {
-      console.error("❌ Access Denied:", error.message);
-    },
   });
 
   const signInUser = (e: React.ChangeEvent<HTMLFormElement>) => {
