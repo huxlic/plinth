@@ -16,7 +16,7 @@ const Telemetry = ({
   ];
 
   return (
-    <aside className="bg-[#111112] box-border border border-border rounded-xl overflow-hidden">
+    <aside className="h-max lg:sticky top-20 bg-[#111112] box-border border border-border rounded-xl overflow-hidden">
       <div className="border-b border-border px-4 py-2 flex items-center justify-between">
         <p className="text-[14px] font-semibold">Telemetry</p>
 

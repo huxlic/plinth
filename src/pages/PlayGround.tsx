@@ -18,7 +18,7 @@ const fetchProjectDetails = async (roomId: string) => {
   return data as ProjectDetails;
 };
 
-const Canvas = () => {
+const PlayGround = () => {
   const navigate = useNavigate();
 
   const { id: roomId } = useParams<{ id: string }>();
@@ -51,10 +51,12 @@ const Canvas = () => {
             {query.isLoading ? (
               <div className="bg-[#111112] flex py-2 px-8 animate-pulse rounded-lg"></div>
             ) : (
-              <p className="text-[11px] text-tertiary uppercase">
+              <p className="text-[11px] text-tertiary">
                 {query.data?.name}
               </p>
             )}
+
+            <p className="text-[11px]">2 peers online</p>
           </div>
         </aside>
 
@@ -75,4 +77,4 @@ const Canvas = () => {
   );
 };
 
-export default Canvas;
+export default PlayGround;

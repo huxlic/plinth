@@ -86,7 +86,7 @@ const Nodes = () => {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-[380px_1fr] gap-6">
+        <div className="relative grid lg:grid-cols-[380px_1fr] gap-6">
           <Telemetry
             GLOBAL_NODES={projects.length}
             USERS_ONLINE={onlineCount}

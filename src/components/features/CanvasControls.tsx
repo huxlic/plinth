@@ -27,9 +27,9 @@ export default function CanvasControls({
       {/* Color strip: vertical scroll + bottom fade on mobile, horizontal on sm+ */}
       <div className="relative h-56 w-10 sm:h-auto sm:w-auto sm:min-w-0 sm:flex-1">
         <div className="flex h-full flex-col gap-1.5 overflow-y-auto p-1  pb-6 sm:h-auto sm:flex-row sm:overflow-x-auto sm:overflow-y-visible sm:p-1 sm:pr-6 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden">
-          {COLORS.map((color) => (
+          {COLORS.map((color, i) => (
             <button
-              key={color}
+              key={i}
               title={color}
               aria-label={`Select ${color}`}
               onClick={() => setCurrentColor(color)}
