@@ -64,7 +64,7 @@ const PlayGround = () => {
 
   return (
     <RoomProvider
-      id={`project-room-v1.2-${roomId}-test-1`}
+      id={`project-lobby-v1-${roomId}-test-1`}
       initialStorage={{
         artNodes: new LiveMap<string, ArtNode>(),
       }}
