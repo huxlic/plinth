@@ -49,13 +49,13 @@ A minimal, high-performance collaborative canvas for developers. Create, sketch,
    npm install
    ```
 
-3. Create a local environment file:
+3. Copy the example environment file:
 
    ```bash
-   touch .env.local
+   cp .env.example .env.local
    ```
 
-4. Add the required variables to `.env.local`:
+4. Fill in the required variables in `.env.local`:
 
    ```env
    VITE_SUPABASE_URL=https://your-project-id.supabase.co
@@ -96,7 +96,7 @@ A minimal, high-performance collaborative canvas for developers. Create, sketch,
 - Users authenticate with Supabase email/password.
 - The dashboard at `/dashboard` lists user projects and online presence.
 - Creating a project opens a new room at `/canvas/:id`.
-- Rooms use Liveblocks `RoomProvider` and an `artNodes` LiveList for shared state.
+- Rooms use Liveblocks `RoomProvider` and an `artNodes` LiveMap for shared state.
 - Clicking an empty grid cell places a node; clicking an occupied cell removes it.
 - Camera pan and zoom are controlled via pointer and wheel events.
 - Online presence is tracked through a Supabase realtime channel.

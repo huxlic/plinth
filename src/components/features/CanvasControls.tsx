@@ -1,7 +1,5 @@
 import { useHistory, useMutation } from "@liveblocks/react/suspense";
-import { LiveList } from "@liveblocks/client";
 import { Redo2, Trash2, Undo2 } from "lucide-react";
-import type { ArtNode } from "../../types";
 import { COLORS } from "../../shared/constants";
 
 interface CanvasControlsProps {
@@ -16,9 +14,9 @@ export default function CanvasControls({
   const history = useHistory();
 
   const clearCanvas = useMutation(({ storage }) => {
-    const artNodes = storage.get("artNodes") as unknown as LiveList<ArtNode>;
-    while (artNodes.length > 0) {
-      artNodes.delete(0);
+    const artNodes = storage.get("artNodes");
+    for (const key of artNodes.keys()) {
+      artNodes.delete(key);
     }
   }, []);
 
