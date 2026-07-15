@@ -124,15 +124,19 @@ const MultiplayerSurface = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // const dpr = window.devicePixelRatio || 1;
-    canvas.width = 1000;
-    canvas.height = 1000;
+    const dpr = window.devicePixelRatio || 1;
+
+    canvas.width = canvasSize * dpr;
+    canvas.height = canvasSize * dpr;
+    canvas.style.width = `${canvasSize}px`;
+    canvas.style.height = `${canvasSize}px`;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    ctx.scale(dpr, dpr);
     // Clear the canvas so old drawings are erased before redrawing
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
 
     // Draw the Grid Lines
     ctx.strokeStyle = "#161618";
@@ -190,8 +194,6 @@ const MultiplayerSurface = () => {
           <canvas
             onClick={handleCanvasClick}
             ref={canvasRef}
-            width={canvasSize}
-            height={canvasSize}
             className="bg-[#111112] cursor-crosshair"
           />
         </div>
