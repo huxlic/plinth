@@ -105,11 +105,6 @@ A minimal, high-performance collaborative canvas for developers. Create, sketch,
 
 The app is ready for Vercel deployment. Ensure the same environment variables are configured in the Vercel dashboard.
 
-## Notes
-
-- There is no `.env.example` file included by default.
-- The app depends on a Supabase table named `projects`.
-
 ## Contributing
 
 1. Fork the repository.
