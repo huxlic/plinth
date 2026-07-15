@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate, useParams } from "react-router";
 import { supabase } from "../lib/utils/supabaseClient";
-import type { ProjectDetails } from "../types";
+import type { ArtNode, ProjectDetails } from "../types";
 import MultiplayerSurface from "../components/features/MultiplayerSurface";
 import { ClientSideSuspense, RoomProvider } from "@liveblocks/react/suspense";
-import { LiveList } from "@liveblocks/client";
+import { LiveMap } from "@liveblocks/client";
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/AuthContext";
 
@@ -64,9 +64,9 @@ const PlayGround = () => {
 
   return (
     <RoomProvider
-      id={`project-room-v1-${roomId}-test-1`}
+      id={`project-lobby-v1-${roomId}-test-1`}
       initialStorage={{
-        artNodes: new LiveList([]),
+        artNodes: new LiveMap<string, ArtNode>(),
       }}
     >
       <div className="min-h-screen grid grid-cols-1 grid-rows-[auto_1fr] ">

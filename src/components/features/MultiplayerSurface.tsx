@@ -3,6 +3,7 @@ import type { ArtNode } from "../../types";
 import { useMutation, useStorage } from "@liveblocks/react/suspense";
 import CanvasControls from "./CanvasControls";
 import { ViewportControls } from "./ViewPortControls";
+import getNodeKey from "../../lib/utils/getNodeKey";
 
 const MultiplayerSurface = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -11,24 +12,19 @@ const MultiplayerSurface = () => {
   const [currentColor, setCurrentColor] = useState("#AAAAAA");
 
   const rawArtNodes = useStorage((root) => root.artNodes);
-  const artNodes = useMemo(() => {
-    return rawArtNodes || [];
-  }, [rawArtNodes]);
+  const artNodes = useMemo(() => rawArtNodes ?? {}, [rawArtNodes]);
 
   const addArtNode = useMutation(({ storage }, newBlock: ArtNode) => {
     const artNodes = storage.get("artNodes");
-    artNodes.push(newBlock);
+    const key = getNodeKey(newBlock.x, newBlock.y);
+    artNodes.set(key, newBlock);
   }, []);
 
   const removeArtNode = useMutation(
     ({ storage }, snappedX: number, snappedY: number) => {
       const list = storage.get("artNodes");
-      const index = list.findIndex(
-        (node) => node.x === snappedX && node.y === snappedY,
-      );
-      if (index !== -1) {
-        list.delete(index);
-      }
+      const key = getNodeKey(snappedX, snappedY);
+      list.delete(key);
     },
     [],
   );
@@ -101,15 +97,14 @@ const MultiplayerSurface = () => {
 
     if (
       snappedX < 0 ||
-      snappedX >= canvas.width ||
+      snappedX >= canvasSize ||
       snappedY < 0 ||
-      snappedY >= canvas.height
+      snappedY >= canvasSize
     )
       return;
 
-    const isOccupied = artNodes.some(
-      (node) => node.x === snappedX && node.y === snappedY,
-    );
+    const key = getNodeKey(snappedX, snappedY);
+    const isOccupied = key in artNodes;
 
     if (isOccupied) {
       removeArtNode(snappedX, snappedY);
@@ -129,15 +124,19 @@ const MultiplayerSurface = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // const dpr = window.devicePixelRatio || 1;
-    canvas.width = 1000;
-    canvas.height = 1000;
+    const dpr = window.devicePixelRatio || 1;
+
+    canvas.width = canvasSize * dpr;
+    canvas.height = canvasSize * dpr;
+    canvas.style.width = `${canvasSize}px`;
+    canvas.style.height = `${canvasSize}px`;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    ctx.scale(dpr, dpr);
     // Clear the canvas so old drawings are erased before redrawing
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
 
     // Draw the Grid Lines
     ctx.strokeStyle = "#161618";
@@ -157,12 +156,9 @@ const MultiplayerSurface = () => {
       ctx.stroke();
     }
 
-    // Draw All the Saved Art Blocks
-    artNodes.forEach((node) => {
+    Object.values(artNodes).forEach((node) => {
       ctx.fillStyle = node.color;
-
       ctx.fillRect(node.x, node.y, gridGap, gridGap);
-
       ctx.strokeStyle = "rgba(0, 0, 0, 0.4)";
       ctx.lineWidth = 1;
       ctx.strokeRect(node.x, node.y, gridGap, gridGap);
@@ -198,8 +194,6 @@ const MultiplayerSurface = () => {
           <canvas
             onClick={handleCanvasClick}
             ref={canvasRef}
-            width={canvasSize}
-            height={canvasSize}
             className="bg-[#111112] cursor-crosshair"
           />
         </div>
