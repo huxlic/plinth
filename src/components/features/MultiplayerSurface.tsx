@@ -3,6 +3,7 @@ import type { ArtNode } from "../../types";
 import { useMutation, useStorage } from "@liveblocks/react/suspense";
 import CanvasControls from "./CanvasControls";
 import { ViewportControls } from "./ViewPortControls";
+import getNodeKey from "../../lib/utils/getNodeKey";
 
 const MultiplayerSurface = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -11,24 +12,19 @@ const MultiplayerSurface = () => {
   const [currentColor, setCurrentColor] = useState("#AAAAAA");
 
   const rawArtNodes = useStorage((root) => root.artNodes);
-  const artNodes = useMemo(() => {
-    return rawArtNodes || [];
-  }, [rawArtNodes]);
+  const artNodes = useMemo(() => rawArtNodes ?? {}, [rawArtNodes]);
 
   const addArtNode = useMutation(({ storage }, newBlock: ArtNode) => {
     const artNodes = storage.get("artNodes");
-    artNodes.push(newBlock);
+    const key = getNodeKey(newBlock.x, newBlock.y);
+    artNodes.set(key, newBlock);
   }, []);
 
   const removeArtNode = useMutation(
     ({ storage }, snappedX: number, snappedY: number) => {
       const list = storage.get("artNodes");
-      const index = list.findIndex(
-        (node) => node.x === snappedX && node.y === snappedY,
-      );
-      if (index !== -1) {
-        list.delete(index);
-      }
+      const key = getNodeKey(snappedX, snappedY);
+      list.delete(key);
     },
     [],
   );
@@ -107,9 +103,8 @@ const MultiplayerSurface = () => {
     )
       return;
 
-    const isOccupied = artNodes.some(
-      (node) => node.x === snappedX && node.y === snappedY,
-    );
+    const key = getNodeKey(snappedX, snappedY);
+    const isOccupied = key in artNodes;
 
     if (isOccupied) {
       removeArtNode(snappedX, snappedY);
@@ -157,12 +152,9 @@ const MultiplayerSurface = () => {
       ctx.stroke();
     }
 
-    // Draw All the Saved Art Blocks
-    artNodes.forEach((node) => {
+    Object.values(artNodes).forEach((node) => {
       ctx.fillStyle = node.color;
-
       ctx.fillRect(node.x, node.y, gridGap, gridGap);
-
       ctx.strokeStyle = "rgba(0, 0, 0, 0.4)";
       ctx.lineWidth = 1;
       ctx.strokeRect(node.x, node.y, gridGap, gridGap);
