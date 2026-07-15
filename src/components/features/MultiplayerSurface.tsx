@@ -97,9 +97,9 @@ const MultiplayerSurface = () => {
 
     if (
       snappedX < 0 ||
-      snappedX >= canvas.width ||
+      snappedX >= canvasSize ||
       snappedY < 0 ||
-      snappedY >= canvas.height
+      snappedY >= canvasSize
     )
       return;
 
