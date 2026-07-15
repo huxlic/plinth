@@ -9,6 +9,7 @@ export default defineConfig({
     include: ["lucide-react"],
   },
   build: {
+    chunkSizeWarningLimit: 1000,
     rolldownOptions: {
       output: {
         // This splits your node_modules into a separate "vendor" file

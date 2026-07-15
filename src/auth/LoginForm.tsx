@@ -13,6 +13,8 @@ const LoginForm = () => {
     password: "",
   });
 
+  const [error, setError] = useState("");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setCredentials((prev) => ({ ...prev, [name]: value }));
@@ -35,6 +37,14 @@ const LoginForm = () => {
 
       return data;
     },
+
+    onSuccess: () => {
+      console.log("🚀 Node Initialized Successfully:");
+    },
+
+    onError: (error) => {
+      setError(error.message);
+    },
   });
 
   const signInUser = (e: React.ChangeEvent<HTMLFormElement>) => {
@@ -46,7 +56,7 @@ const LoginForm = () => {
   };
 
   return (
-    <section className="relative h-screen bg-grid-faded flex justify-center items-center px-4 overflow-hidden">
+    <section className="relative min-h-screen bg-grid-faded flex justify-center items-center px-4 overflow-hidden">
       <div className="absolute w-112.5 h-112.5 bg-blue-500/10 blur-[120px] rounded-full pointer-events-none z-0" />
 
       <div className="relative flex flex-col gap-2 justify-center items-center w-full max-w-md z-10">
@@ -64,6 +74,11 @@ const LoginForm = () => {
           Developer Identity · Node Access
         </p>
 
+        {error && (
+          <div className="text-[11px] w-full flex justify-center border border-[#4a2900] bg-[#291900] p-2 px-4 rounded-xl -mb-4 mt-2">
+            ⚠️ {error}
+          </div>
+        )}
         <form
           className="w-full flex flex-col gap-5 bg-[#111112]/90 backdrop-blur-md p-8 rounded-2xl border border-border mt-6 shadow-2xl"
           onSubmit={(e) => {
@@ -111,7 +126,7 @@ const LoginForm = () => {
 
           <button
             type="submit"
-            className={`text-[13px] mt-2 px-4 py-3 text-black font-bold ${loginMutation.isPending ? "cursor-not-allowed bg-gray-300" : "bg-white hover:bg-gray-200 cursor-pointer"} active:scale-[0.98] transition-all rounded-lg text-center`}
+            className={`text-[13px] mt-2 px-4 py-3 text-black font-bold ${loginMutation.isPending ? "cursor-not-allowed bg-zinc-400" : "bg-white hover:bg-gray-200 cursor-pointer"} active:scale-[0.98] transition-all rounded-lg text-center`}
           >
             {loginMutation.isPending ? "CONNECTING_TO_NODE..." : "Access Node"}
           </button>
