@@ -8,7 +8,7 @@ const MultiplayerSurface = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const onControlRef = useRef(false);
 
-  const [currentColor, setCurrentColor] = useState("#EF4444");
+  const [currentColor, setCurrentColor] = useState("#AAAAAA");
 
   const rawArtNodes = useStorage((root) => root.artNodes);
   const artNodes = useMemo(() => {
