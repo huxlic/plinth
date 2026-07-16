@@ -117,7 +117,7 @@ const PlayGround = () => {
             </button>
 
             <div
-              className="flex h-7 items-center px-2.5 w-32 sm:w-max rounded-lg backdrop-blur-sm select-none font-jetbrains-mono"
+              className="flex h-7 items-center justify-center px-2.5 w-32 sm:w-max rounded-lg backdrop-blur-sm select-none font-jetbrains-mono"
               title={query.data?.name}
             >
               {query.isLoading ? (
