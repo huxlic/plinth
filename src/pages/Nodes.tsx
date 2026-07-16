@@ -127,7 +127,11 @@ const Nodes = () => {
               {!isLoading && (
                 <div className="grid grid-cols-1 gap-4">
                   {projects.map((project) => (
-                    <NodeProjectCard key={project.id} {...project} />
+                    <NodeProjectCard
+                      key={project.id}
+                      {...project}
+                      currentUserId={user?.id}
+                    />
                   ))}
                 </div>
               )}

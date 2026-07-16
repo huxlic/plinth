@@ -106,12 +106,12 @@ const PlayGround = () => {
   }, [user?.id]);
 
   return (
-    <RoomProvider
-      id={`project-lobby-v1-${roomId}-test-1`}
-      initialStorage={{
-        artNodes: new LiveMap<string, ArtNode>(),
-      }}
-    >
+    // <RoomProvider
+    //   id={`project-lobby-v1-${roomId}-test-1`}
+    //   initialStorage={{
+    //     artNodes: new LiveMap<string, ArtNode>(),
+    //   }}
+    // >
       <div className="min-h-screen grid grid-cols-1 grid-rows-[auto_1fr] ">
         <section className="bg-[#0A0A0B] bg-grid-faded border-b border-border">
           <div className="font-jetbrains-mono py-2 px-3 border-b border-border flex justify-between items-center">
@@ -151,15 +151,22 @@ const PlayGround = () => {
               Checking access...
             </div>
           ) : isMember ? (
-            <ClientSideSuspense
-              fallback={
-                <div className="flex h-screen items-center justify-center text- bg-[#111112] bg-grid-faded font-jetbrains-mono">
-                  Loading canvas...
-                </div>
-              }
+            <RoomProvider
+              id={`project-lobby-v1-${roomId}-test-1`}
+              initialStorage={{
+                artNodes: new LiveMap<string, ArtNode>(),
+              }}
             >
-              <MultiplayerSurface />
-            </ClientSideSuspense>
+              <ClientSideSuspense
+                fallback={
+                  <div className="flex h-screen items-center justify-center text- bg-[#111112] bg-grid-faded font-jetbrains-mono">
+                    Loading canvas...
+                  </div>
+                }
+              >
+                <MultiplayerSurface />
+              </ClientSideSuspense>
+            </RoomProvider>
           ) : (
             <div className="flex h-screen bg-grid-faded flex-col items-center justify-center gap-4 font-jetbrains-mono">
               {joinError === "full" ? (
@@ -185,7 +192,7 @@ const PlayGround = () => {
           )}
         </main>
       </div>
-    </RoomProvider>
+    // </RoomProvider>
   );
 };
 
