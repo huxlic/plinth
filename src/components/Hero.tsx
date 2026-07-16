@@ -92,7 +92,7 @@ const Hero = () => {
             Open Node Hub
           </Link>
           <Link
-            to="/canvas/main-grid-alpha"
+            to="/register"
             className="hero-content flex items-center justify-center gap-2 text-primary text-[14px] px-4 py-2 font-semibold rounded-full bg-[#111112] border border-border "
           >
             <span>Enter Alpha</span>

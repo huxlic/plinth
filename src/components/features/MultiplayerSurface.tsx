@@ -9,10 +9,16 @@ const MultiplayerSurface = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const onControlRef = useRef(false);
 
+  const dragStart = useRef({ x: 0, y: 0 });
+  const hasDragged = useRef(false);
+
   const [currentColor, setCurrentColor] = useState("#AAAAAA");
 
   const rawArtNodes = useStorage((root) => root.artNodes);
   const artNodes = useMemo(() => rawArtNodes ?? {}, [rawArtNodes]);
+
+  const [camera, setCamera] = useState({ x: 0, y: 0, zoom: 1 });
+  const [isPanning, setIsPanning] = useState(false);
 
   const addArtNode = useMutation(({ storage }, newBlock: ArtNode) => {
     const artNodes = storage.get("artNodes");
@@ -29,12 +35,6 @@ const MultiplayerSurface = () => {
     [],
   );
 
-  const [camera, setCamera] = useState({ x: 0, y: 0, zoom: 1 });
-  const [isPanning, setIsPanning] = useState(false);
-
-  const dragStart = useRef({ x: 0, y: 0 });
-  const hasDragged = useRef(false);
-
   const gridGap = 10;
   const canvasSize = 1000;
 
@@ -48,7 +48,7 @@ const MultiplayerSurface = () => {
       const worldX = (e.clientX - prev.x) / prev.zoom,
         worldY = (e.clientY - prev.y) / prev.zoom;
 
-      const nextZoom: number = Math.max(
+      const nextZoom = Math.max(
         0.1,
         Math.min(4.0, e.deltaY < 0 ? prev.zoom * 1.02 : prev.zoom / 1.02),
       );
