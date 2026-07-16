@@ -1,6 +1,13 @@
+import gsap from "gsap";
 import Logo from "./Logo";
+import { ScrollToPlugin } from "gsap/all";
+gsap.registerPlugin(ScrollToPlugin);
 
 const Footer = () => {
+  const goToHero = () => {
+    gsap.to(window, { duration: 1, scrollTo: "#hero" });
+  };
+
   const currentYear = new Date().getFullYear();
 
   return (
@@ -8,9 +15,9 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Brand & Copyright */}
         <div className="flex flex-col sm:flex-row items-center gap-3 text-center sm:text-left">
-          <a href="#hero">
+          <button onClick={goToHero}>
             <Logo />
-          </a>
+          </button>
           <span className="hidden sm:inline text-zinc-850">|</span>
           <span>© {currentYear} · Global Collaborative Canvas</span>
         </div>

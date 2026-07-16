@@ -21,6 +21,8 @@ const NodeProjectCard = ({
   const accentColor = getAccentColor(id);
   const isOwnedByCurrentUser = created_by === currentUserId;
 
+  
+
   return (
     <div className="group border border-border bg-[#111112] p-4 rounded-xl hover:bg-[#0A0A0B] hover:border-zinc-700 transition-all duration-300 flex justify-between items-center">
       <div className="flex items-center gap-4 min-w-0">
