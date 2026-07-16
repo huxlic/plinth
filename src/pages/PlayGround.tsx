@@ -106,12 +106,6 @@ const PlayGround = () => {
   }, [user?.id]);
 
   return (
-    // <RoomProvider
-    //   id={`project-lobby-v1-${roomId}-test-1`}
-    //   initialStorage={{
-    //     artNodes: new LiveMap<string, ArtNode>(),
-    //   }}
-    // >
       <div className="min-h-screen grid grid-cols-1 grid-rows-[auto_1fr] ">
         <section className="bg-[#0A0A0B] bg-grid-faded border-b border-border">
           <div className="font-jetbrains-mono py-2 px-3 border-b border-border flex justify-between items-center">
@@ -144,7 +138,7 @@ const PlayGround = () => {
           </div>
         </section>
 
-        {/* Main: Fills the remaining space perfectly */}
+
         <main className="w-full h-full overflow-hidden">
           {membershipQuery.isLoading ? (
             <div className="flex h-screen bg-grid-faded items-center justify-center font-jetbrains-mono text-tertiary">
@@ -179,7 +173,7 @@ const PlayGround = () => {
                   <button
                     onClick={handleJoin}
                     disabled={isJoining}
-                    className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-[11px] font-bold px-4 py-2 rounded-full transition-colors"
+                    className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-[11px] font-bold px-4 py-2 rounded-xl transition-colors"
                   >
                     {isJoining ? "Joining..." : "Join Project"}
                   </button>
@@ -192,7 +186,6 @@ const PlayGround = () => {
           )}
         </main>
       </div>
-    // </RoomProvider>
   );
 };
 

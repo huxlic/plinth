@@ -10,7 +10,7 @@ const Telemetry = ({
   const upTime = "99.998%";
 
   const telemetry: { title: string; rate: number | string }[] = [
-    { title: "Global nodes", rate: globalNodes },
+    { title: "total nodes", rate: globalNodes },
     { title: "Users online", rate: usersOnline },
     { title: "Uptime", rate: upTime },
   ];
