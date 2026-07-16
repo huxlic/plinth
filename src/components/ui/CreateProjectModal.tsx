@@ -41,8 +41,6 @@ export const CreateProjectModal = ({
       navigate(`/canvas/${newProject.id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      console.error(err);
-
       setErrorMessage(err?.message || "An unexpected database error occurred.");
     } finally {
       setIsSubmitting(false);

@@ -113,7 +113,7 @@ const Nodes = () => {
 
               {error && (
                 <div className="text-[14px] border border-[#4a2900] bg-[#291900] p-4 rounded-xl my-4">
-                  ⚠️ Network Failure: {error}
+                  ⚠️ {error}
                 </div>
               )}
 
@@ -127,7 +127,11 @@ const Nodes = () => {
               {!isLoading && (
                 <div className="grid grid-cols-1 gap-4">
                   {projects.map((project) => (
-                    <NodeProjectCard key={project.id} {...project} />
+                    <NodeProjectCard
+                      key={project.id}
+                      {...project}
+                      currentUserId={user?.id}
+                    />
                   ))}
                 </div>
               )}
