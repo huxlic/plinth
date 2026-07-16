@@ -46,6 +46,26 @@
     32px 0px 0 0 rgba(41, 151, 255, 0.7);
 }
 
+@utility bg-slash-waves {
+  background-size: 120px 120px;
+  background-image: repeating-linear-gradient(-45deg,
+      rgba(35, 35, 38, 0.4) 0px,
+      rgba(35, 35, 38, 0.4) 2px,
+      transparent 2px,
+      transparent 40px);
+  animation: slash-drift 20s linear infinite;
+}
+
+@keyframes slash-drift {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 120px 120px;
+  }
+}
+
 .showcase-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #2997ff #050506;

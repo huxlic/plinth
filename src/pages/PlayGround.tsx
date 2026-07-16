@@ -106,86 +106,85 @@ const PlayGround = () => {
   }, [user?.id]);
 
   return (
-      <div className="min-h-screen grid grid-cols-1 grid-rows-[auto_1fr] ">
-        <section className="bg-[#0A0A0B] bg-grid-faded border-b border-border">
-          <div className="font-jetbrains-mono py-2 px-3 border-b border-border flex justify-between items-center">
-            <button
-              onClick={() => navigate("/dashboard")}
-              className="text-[11px] flex items-center gap-1 hover:text-[#2997FF] transition-colors"
-            >
-              <ArrowLeft size={13} /> Node Hub
-            </button>
+    <div className="min-h-screen grid grid-cols-1 grid-rows-[auto_1fr] ">
+      <section className="bg-[#0A0A0B] bg-slash-waves border-b border-border">
+        <div className="font-jetbrains-mono py-2 px-3 border-b border-border flex justify-between items-center">
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="text-[11px] flex items-center gap-1 hover:text-[#2997FF] transition-colors"
+          >
+            <ArrowLeft size={13} /> Node Hub
+          </button>
 
-            <div
-              className="flex h-7 items-center justify-center px-2.5 w-32 sm:w-max rounded-lg backdrop-blur-sm select-none font-jetbrains-mono"
-              title={query.data?.name}
+          <div
+            className="flex h-7 items-center justify-center px-2.5 w-32 sm:w-max rounded-lg backdrop-blur-sm select-none font-jetbrains-mono"
+            title={query.data?.name}
+          >
+            {query.isLoading ? (
+              <div className="h-3 w-16 animate-pulse rounded bg-zinc-800" />
+            ) : (
+              <p className="truncate text-[11px] font-medium text-zinc-400">
+                {query.data?.name || "Untitled Canvas"}
+              </p>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="h-1.5 w-1.5 rounded-full bg-[#30D158]"></div>
+            <p className="text-[10px]">
+              {onlineCount} {onlineCount <= 1 ? "person" : "people"} online
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <main className="w-full h-full overflow-hidden">
+        {membershipQuery.isLoading ? (
+          <div className="flex h-screen bg-grid-faded bg-[#111112] text-[13px] items-center justify-center font-jetbrains-mono text-tertiary">
+            <span className="animate-pulse">Checking access...</span>
+          </div>
+        ) : isMember ? (
+          <RoomProvider
+            id={`project-lobby-v1-${roomId}-test-1`}
+            initialStorage={{
+              artNodes: new LiveMap<string, ArtNode>(),
+            }}
+          >
+            <ClientSideSuspense
+              fallback={
+                <div className="flex h-screen items-center justify-center text-[13px] bg-[#111112] bg-grid-faded font-jetbrains-mono">
+                  <span className="animate-pulse">Loading canvas...</span>
+                </div>
+              }
             >
-              {query.isLoading ? (
-                <div className="h-3 w-16 animate-pulse rounded bg-zinc-800" />
-              ) : (
-                <p className="truncate text-[11px] font-medium text-zinc-400">
+              <MultiplayerSurface />
+            </ClientSideSuspense>
+          </RoomProvider>
+        ) : (
+          <div className="flex h-screen bg-grid-faded flex-col items-center justify-center gap-4 font-jetbrains-mono">
+            {joinError === "full" ? (
+              <p className="text-lg text-red-400">This room is full</p>
+            ) : (
+              <>
+                <p className="text-lg text-zinc-300">
                   {query.data?.name || "Untitled Canvas"}
                 </p>
-              )}
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-[#30D158]"></div>
-              <p className="text-[10px]">
-                {onlineCount} {onlineCount <= 1 ? "person" : "people"} online
-              </p>
-            </div>
+                <button
+                  onClick={handleJoin}
+                  disabled={isJoining}
+                  className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-[11px] font-bold px-4 py-2 rounded-xl transition-colors"
+                >
+                  {isJoining ? "Joining..." : "Join Project"}
+                </button>
+                {joinError && joinError !== "full" && (
+                  <p className="text-[11px] text-red-400">{joinError}</p>
+                )}
+              </>
+            )}
           </div>
-        </section>
-
-
-        <main className="w-full h-full overflow-hidden">
-          {membershipQuery.isLoading ? (
-            <div className="flex h-screen bg-grid-faded items-center justify-center font-jetbrains-mono text-tertiary">
-              Checking access...
-            </div>
-          ) : isMember ? (
-            <RoomProvider
-              id={`project-lobby-v1-${roomId}-test-1`}
-              initialStorage={{
-                artNodes: new LiveMap<string, ArtNode>(),
-              }}
-            >
-              <ClientSideSuspense
-                fallback={
-                  <div className="flex h-screen items-center justify-center text- bg-[#111112] bg-grid-faded font-jetbrains-mono">
-                    Loading canvas...
-                  </div>
-                }
-              >
-                <MultiplayerSurface />
-              </ClientSideSuspense>
-            </RoomProvider>
-          ) : (
-            <div className="flex h-screen bg-grid-faded flex-col items-center justify-center gap-4 font-jetbrains-mono">
-              {joinError === "full" ? (
-                <p className="text-lg text-red-400">This room is full</p>
-              ) : (
-                <>
-                  <p className="text-lg text-zinc-300">
-                    {query.data?.name || "Untitled Canvas"}
-                  </p>
-                  <button
-                    onClick={handleJoin}
-                    disabled={isJoining}
-                    className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-[11px] font-bold px-4 py-2 rounded-xl transition-colors"
-                  >
-                    {isJoining ? "Joining..." : "Join Project"}
-                  </button>
-                  {joinError && joinError !== "full" && (
-                    <p className="text-[11px] text-red-400">{joinError}</p>
-                  )}
-                </>
-              )}
-            </div>
-          )}
-        </main>
-      </div>
+        )}
+      </main>
+    </div>
   );
 };
 
