@@ -24,11 +24,10 @@ export const ViewportControls: React.FC<ViewportControlsProps> = ({
   };
 
   const handleReCenter = () => {
-    // Completely resets the entire camera viewport object in one shot
     setCamera({ x: 0, y: 0, zoom: 1.0 });
   };
 
-  const zoomPercentage = Math.round(camera.zoom * 100);;
+  const zoomPercentage = Math.round(camera.zoom * 100);
 
   return (
     <div className="absolute right-3 top-12 z-50 flex items-center gap-1.5 rounded-2xl border border-border bg-[#111112]/95 p-1 shadow-2xl backdrop-blur select-none sm:right-6">
