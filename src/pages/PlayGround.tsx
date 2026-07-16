@@ -20,6 +20,18 @@ const fetchProjectDetails = async (roomId: string) => {
   return data as ProjectDetails;
 };
 
+const checkMembership = async (roomId: string, userId: string) => {
+  const { data, error } = await supabase
+    .from("project_members")
+    .select("project_id")
+    .eq("project_id", roomId)
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  if (error) throw new Error(error.message);
+  return data;
+};
+
 const PlayGround = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -27,11 +39,42 @@ const PlayGround = () => {
   const { id: roomId } = useParams<{ id: string }>();
   const [onlineCount, setOnlineCount] = useState(1);
 
+  const [isJoining, setIsJoining] = useState(false);
+  const [joinError, setJoinError] = useState<"full" | string | null>(null);
+
   const query = useQuery({
     queryKey: ["project", roomId],
     queryFn: () => fetchProjectDetails(roomId!),
-    enabled: !!roomId, // Guard: Only run if roomId exists
+    enabled: !!roomId,
   });
+
+  const membershipQuery = useQuery({
+    queryKey: ["membership", roomId, user?.id],
+    queryFn: () => checkMembership(roomId!, user!.id),
+    enabled: !!roomId && !!user?.id,
+  });
+
+  const isMember = !!membershipQuery.data;
+
+  const handleJoin = async () => {
+    if (!user?.id || !roomId) return;
+    setIsJoining(true);
+    setJoinError(null);
+
+    const { error } = await supabase
+      .from("project_members")
+      .insert({ project_id: roomId, user_id: user.id });
+
+    setIsJoining(false);
+
+    if (error) {
+      // 42501 = Postgres RLS policy violation — this is the 10-member cap firing
+      setJoinError(error.code === "42501" ? "full" : error.message);
+      return;
+    }
+
+    membershipQuery.refetch();
+  };
 
   useEffect(() => {
     if (!user?.id) return;
@@ -103,15 +146,43 @@ const PlayGround = () => {
 
         {/* Main: Fills the remaining space perfectly */}
         <main className="w-full h-full overflow-hidden">
-          <ClientSideSuspense
-            fallback={
-              <div className="flex h-screen items-center justify-center text- bg-[#111112] bg-grid-faded font-jetbrains-mono">
-                Loading canvas...
-              </div>
-            }
-          >
-            <MultiplayerSurface />
-          </ClientSideSuspense>
+          {membershipQuery.isLoading ? (
+            <div className="flex h-screen bg-grid-faded items-center justify-center font-jetbrains-mono text-tertiary">
+              Checking access...
+            </div>
+          ) : isMember ? (
+            <ClientSideSuspense
+              fallback={
+                <div className="flex h-screen items-center justify-center text- bg-[#111112] bg-grid-faded font-jetbrains-mono">
+                  Loading canvas...
+                </div>
+              }
+            >
+              <MultiplayerSurface />
+            </ClientSideSuspense>
+          ) : (
+            <div className="flex h-screen bg-grid-faded flex-col items-center justify-center gap-4 font-jetbrains-mono">
+              {joinError === "full" ? (
+                <p className="text-lg text-red-400">This room is full</p>
+              ) : (
+                <>
+                  <p className="text-lg text-zinc-300">
+                    {query.data?.name || "Untitled Canvas"}
+                  </p>
+                  <button
+                    onClick={handleJoin}
+                    disabled={isJoining}
+                    className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-[11px] font-bold px-4 py-2 rounded-full transition-colors"
+                  >
+                    {isJoining ? "Joining..." : "Join Project"}
+                  </button>
+                  {joinError && joinError !== "full" && (
+                    <p className="text-[11px] text-red-400">{joinError}</p>
+                  )}
+                </>
+              )}
+            </div>
+          )}
         </main>
       </div>
     </RoomProvider>
