@@ -8,17 +8,16 @@ import getNodeKey from "../../lib/utils/getNodeKey";
 const MultiplayerSurface = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const onControlRef = useRef(false);
-
   const dragStart = useRef({ x: 0, y: 0 });
   const hasDragged = useRef(false);
 
   const [currentColor, setCurrentColor] = useState("#AAAAAA");
+  const [camera, setCamera] = useState({ x: 0, y: 0, zoom: 1 });
+  const [isPanning, setIsPanning] = useState(false);
 
   const rawArtNodes = useStorage((root) => root.artNodes);
   const artNodes = useMemo(() => rawArtNodes ?? {}, [rawArtNodes]);
 
-  const [camera, setCamera] = useState({ x: 0, y: 0, zoom: 1 });
-  const [isPanning, setIsPanning] = useState(false);
 
   const addArtNode = useMutation(({ storage }, newBlock: ArtNode) => {
     const artNodes = storage.get("artNodes");
